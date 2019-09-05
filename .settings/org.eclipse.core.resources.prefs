@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//application/config.php=UTF-8
+encoding//application/config_sample.php=UTF-8
+encoding//application/database.php=UTF-8
+encoding//application/database_sample.php=UTF-8
+encoding//application/home/controller/Index.php=UTF-8
+encoding//application/home/view/base/footer.html=UTF-8
+encoding//application/home/view/consultation/index.html=UTF-8
+encoding//application/home/view/index/index.html=UTF-8
+encoding//thinkphp/base.php=UTF-8
+encoding//vendor/topthink/think-captcha/src=UTF-8
+encoding/public=UTF-8
