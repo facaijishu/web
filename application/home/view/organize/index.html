@@ -1,0 +1,128 @@
+{include file="base/header_new" /}
+	<div class="container" style="height:120px;">
+		<div class="index_header" style="margin-left:0px;">
+		<div style="float:left;margin-top:40px;width:500px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+			<ul>
+				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
+				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
+				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a style="font-size:22px;color:#222222;" href='{:url("Index/listorganize")}' >找资金</a></li>
+				<li><a href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
+				<li><a href="/" title="首页">首页</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="detail" class="container">
+		<div class="detail_menu">
+			<a href="/" title="首页">首页</a> &nbsp;>&nbsp;
+			<a href='{:url("Index/listproject")}' title="资金">资金</a>&nbsp;>&nbsp;
+			<a href="javascript:;" title="资金详情">资金详情</a>
+		</div>
+		<div class="detail_content" style="float:left;width:890px;height:100%;">
+			<div style="height:100%;width:55px;float:left;"></div>
+			<div class="detail_title" title="{$info.org_name}"> {$info.org_name}
+				<div style="float:right;text-align:center;line-height:34px;" >
+                	<img src="/static/common/img/best_icon.png" width="85" height="34" title="精选">
+				</div>
+			</div>
+			<div class="detail_memo" style="letter-spacing:1px;">
+	          	<div style="float:left;line-height:23px;">投资规模：</div>
+	          	<div class="pro_industry">万元</div>	
+	          	<div style="float:left;line-height:23px;">所属区域：</div>
+	          	<div class="pro_industry">
+	          		{$info.area}
+	          	</div>				
+	        </div>
+	        <div class="detail_memo" style="margin-top:10px;" >
+		        <div style="float:left;width:500px;line-height:25px;">
+		        	
+		        </div>	
+		        <div style="text-align:right;float:right;">
+		        	<div class="call_view" style="margin-right:9px;" title="点击微信扫码联系"  onclick="showBox()"></div>
+		        	<div class="plan_view" title="点击下载"></div>
+		        </div>
+	        </div>
+	        <div class="popBox">
+			    <div class="popClose">
+			        <a href="javascript:void(0)" onclick="closeBox()"><img src="/static/common/img/close.png"></a>
+			    </div>
+		        <div class="popContent">
+				    <div class="popImg">
+				    	<img src="{$info.qr_path}" width="220" height="220">
+				    </div>
+				</div>
+			</div>
+
+	        <div class="detail_memo" style="float;right;width:55px;"></div>
+	        <div class="detail_memo" style="height:30px;border-bottom:solid 1px #d8d8d8;"></div>
+			<div class="detail_body">
+				<div style="margin-top:40px;"><img src="/static/common/img/org_01.png" width="160" height="87" title="投资方向"></div>
+				<div class="detail_pro" style="color:#2e77f5;">
+					{foreach name="$info.dict_list" item="dict"}
+					{$dict.dict_name}、
+					{/foreach}
+				</div>
+				<div style="margin-top:40px;"><img src="/static/common/img/org_02.png" width="160" height="87" title="行业分析"></div>
+				<div class="detail_pro"></div>
+				<div style="margin-top:40px;"><img src="/static/common/img/org_03.png" width="160" height="87" title="投资案例"></div>
+				<div class="detail_pro">
+					{foreach name="$info.target_list" item="tit"}
+					{$tit.target_company}、
+					{/foreach}
+				</div>
+				<div style="margin-top:40px;"><img src="/static/common/img/org_04.png" width="160" height="87" title="业务亮点"></div>
+				<div class="detail_pro"></div>
+			</div>
+		</div>
+		<div style="float:right;width:500px;height:100%;">
+			<div style="font-size:28px;font-weight:bold;margin:0 0 62px 55px;color:#565682;">猜你需要</div>
+			{foreach name="$info.related_org_list" item="it"}
+			<div class="right_card">
+					<a href='{:url("organize/index",["id" => $it.id])}' target="_blank" title="">
+						<div class="right_card_content">
+							<div style=";width:450px;">
+								<div class="list_title" style="margin:22px 44px 27px 44px;line-height:50px;height:50px;" title="">{$it.name}
+									<div style="float:right;width:46px;height:46px;border-radius:23px;"><img src="/static/common/img/default.png"></div>
+								</div>
+							</div>
+							<div class="list_content" style="line-height:30px;margin-left:44px;height:60px;" title="{$it.contacts}">{$it.contacts}&nbsp;&nbsp;|&nbsp;&nbsp;{$it.position}</div>
+							<div style="font-size:14px;margin:0 44px 44px 44px;line-height:40px;height:40px;">
+								<div style="float:left;color:#357cf6;font-weight:bold;">
+									{foreach name="$it.dict_list" item="dt"}
+									<span style="margin-right:16px;" title="">{$dt.dict_name}</span>
+									{/foreach}
+								</div>
+								<div style="float:left;width:50px;height:30px;"></div>
+								<div style="float:right;text-align:center;line-height:30px;color:#9191af;" title="{$it.view_num}人浏览">{$it.view_num}人浏览</div>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div style="float:right;width:450px;height:30px;"></div>
+			{/foreach}
+		</div>
+	
+	</div>
+	{include file="base/footer_new" /}
+	<script type="text/javascript">
+		var h 	  = $(".detail_body").height();
+		var str_h = h + 690;
+		var str_s = h + 600;
+		$(".detail_content").css({"height":str_s+"px"});  
+		$("#detail").css({"height":str_h+"px"});  
+	</script>
+	
+	<script type="text/javascript">
+		function showBox(){
+			$(".popBox").show();
+			
+		}
+		
+		function closeBox(){
+			$(".popBox").hide();
+			
+		}
+	</script>
+		
+	</body>
+</html>

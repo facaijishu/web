@@ -1,0 +1,158 @@
+{include file="base/header_new" /}
+	<script>
+    	var captcha_url = "{:captcha_src()}";
+	</script>
+
+	<div style="background: url(/static/common/img/login_bg.png) repeat;height:947px;position:relative;">
+		<div class="container">
+			<div class="login">
+				<div class="login_head">
+					<div id="head1" class="login_head_actived">
+						<a href="javascript:void(0);" onclick="clickTitle(1,2)" >密码登录</a>
+					</div>
+					<div style="width:40px;float:left;">&nbsp;</div>
+					<div id="head2" class="login_head_active">
+						<a href="javascript:void(0);" onclick="clickTitle(2,1)">短信登录</a>
+					</div>
+				</div>
+				<div id="login1" style="display:block;">
+					<form action="/home/pub/dologinpsw" method="post" id="loginPswModal">
+					<div class="login_body" style="margin-top:60px;height:200px;">
+						<ul>
+							<li><div class="login_body_input"><input type="text" name="phone_psw" id="phone_psw" value="" placeholder="手机号"/></div></li>
+							<li><div class="login_body_input"><input type="password" name="password" id="password"  value="" placeholder="密码"/></div></li>
+							<div class="input_error" id="loginPsw_error" style="display:none;"></div>
+							<div class="login_tips" style="float:left;width:339px;margin-top:10px;">
+								<input id="check" name="check" value="" type="checkbox">
+								<span>下次自动登录（7天免登录）</span>
+								<span style="float:right;color:#979797;"><a href="/home/pub/forgetPwd">忘记密码</a> &nbsp;&nbsp;|&nbsp;&nbsp;<a href="/home/pub/register">注册</a></span>
+							</div>
+						</ul>
+					</div>
+					<div class="login_submit" onclick="return loginPswCheck()" >登&nbsp;录</div>
+					<input type="hidden" name="rember" id="rember" value="0" >
+					<input type="hidden" name="loginPsw_url" id="loginPsw_url" value="{$jump}" >
+					</form>
+				</div>
+				<div id="login2" style="display:none;">
+					<form action="/home/pub/dologin" method="post" id="loginModal">
+					<div class="login_body" style="height:280px;">
+						<ul>
+							<li><div class="login_body_input"><input type="text" name="phone" id="phone" value=""  placeholder="手机号" /></div></li>
+							<li>
+								<div class="login_body_input_short">
+								<input type="text" name="imgcode" id="imgcode" placeholder="图形验证码"  width="85" maxlength="6" /></div>
+								<div id="" class="" onclick="javascript:document.getElementById('codeimage').src=captcha_url+'?v=' + Math.random();"  style="float:left;margin-left:10px;cursor:pointer;">
+									<div class="code">
+					                    <div class="code-img">
+					                        <img src="{:captcha_src()}" name="codeimage" id="codeimage" border="0">
+					                    </div>
+					                </div>
+								</div>
+							</li>
+							<li>
+								<div class="login_body_input_short">
+									<input type="text" name="regcode" id="regcode" placeholder="手机验证码"  width="85" maxlength="6" />
+								</div>
+								<div id="sendCode" class="verify_code_btn" onclick="getVerifyCode()">获取验证码</div>
+							</li>
+							<li>
+							<div class="input_error" id="login_error" style="display:none;"></div>
+							<div class="login_tips">
+								<span style="float:right;margin-top:5px;margin-right:48px;color:#979797;"><a href="/home/pub/forgetPwd">忘记密码</a> &nbsp;&nbsp;|&nbsp;&nbsp;<a href="/home/pub/register">注册</a></span>
+							</div>
+							</li>
+						</ul>
+					</div>
+					<div class="login_submit" onclick="return loginCheck()" style="text-align:center;margin:0px 48px 0 48px;">登&nbsp;录</div>
+					<input type="hidden" name="login_url" id="login_url" value="{$jump}" >
+					</form>
+				</div>
+			</div>
+			<div style="position:absolute;top:840px;width:100%;color:#fff;font-size:12px;font-weight:100px;text-align:center;">
+				&copy;2019&nbsp;上海歆宝信息科技有限公司&nbsp;
+				<a style="color:#fff;" href="http://www.miibeian.gov.cn" target="_blank">沪ICP备17044635号 </a>&nbsp;
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+	$(function () {
+		var windowW = document.documentElement.clientWidth;
+		
+		$("#check").click(function(){
+			if ($(this).is(':checked')) {
+				$("#loginPswModal").find("input[name='rember']").val(1);
+			}else{
+				$("#loginPswModal").find("input[name='rember']").val(0);
+			}
+		});
+		
+	});
+	
+	/**
+	 * 获取验证码
+	 * @returns
+	 */
+	function getVerifyCode(){ 
+		var phone	 = $("#loginModal").find("input[name='phone']").val();
+		var imgcode	 = $("#loginModal").find("input[name='imgcode']").val();
+		if(phone==""){
+			$("#login_error").html("请填写手机号");
+			$("#login_error").css('display','block'); 
+			return false;
+		}
+		
+		if (!(/^1(3|4|5|6|7|8)\d{9}$/.test(phone))) {
+	    	$("#login_error").html("请填写正确的手机号");
+	    	$("#login_error").css('display','block'); 
+	        return false;
+	    }
+		
+		if(imgcode==""){
+			$("#login_error").html("请填写图形验证码");
+			$("#login_error").css('display','block'); 
+			return false;
+		}
+			
+		if ($("#sendCode").hasClass('verify_code_btn')) {
+			$("#sendCode").removeClass("verify_code_btn");
+			$("#sendCode").addClass("verify_code_btn_gray");
+			$.ajax({
+				url: "{:url('Member/getNewNumber')}",
+                type: 'POST',
+                dataType: 'json',
+                data: {"phone": phone,"imgcode":imgcode,"type": 2},
+                success: function(res){
+                	console.log(res.msg);
+                	console.log(res.code);
+                	if (res.code == 200) {
+                		$("#login_error").css('display','none'); 
+                        var i = 60;
+                        var it = setInterval(function(){
+                            if (i > 0) {
+                                $("#sendCode").html(i +" s");
+                            }else {
+                                $("#sendCode").removeClass("verify_code_btn_gray");
+                                $("#sendCode").addClass("verify_code_btn");
+                                $("#sendCode").html("获取验证码");
+                                clearInterval(it);
+                            }
+                            i--;
+                        }, 1000);
+                    }else {
+                    	$("#sendCode").removeClass("verify_code_btn_gray");
+            			$("#sendCode").addClass("verify_code_btn");
+                    	$("#login_error").html(res.msg);
+                    	$("#login_error").css('display','block'); 
+                    }
+                }
+            })
+		}
+	}
+	
+</script>
+
+
+

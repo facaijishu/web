@@ -1,0 +1,259 @@
+{include file="base/header_new" /}
+	<script>
+    	var captcha_url = "{:captcha_src()}";
+	</script>
+	<div class="container" style="height:120px;">
+		<div class="index_header" style="margin-left:0px;">
+			<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+			<ul>
+				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
+				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
+				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Index/listorganize")}' title="找资金">找资金</a></li>
+				<li><a href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
+				<li><a href="/" title="首页">首页</a></li>
+			</ul>
+		</div>
+	</div>
+	<form action="/home/pub/doadd" method="post" id="addModal">
+	<div class="container" style="height:950px;">
+		<div style="float:left;height:900px;width:35%;"></div>
+		<div class="login_body" style="float:left;height:900px;width:40%;">
+			<ul>
+				<li><span style="line-height:40px;float:left;">项目简介：</span><div class="login_body_input"><input type="text" name="pro_name" id="pro_name" placeholder="项目简介" maxlength="25" /></div></li>
+				<li><span style="line-height:40px;float:left;">企业名称：</span><div class="login_body_input"><input type="text" name="company_name" id="company_name" placeholder="企业名称" maxlength="20" /></div></li>
+				<li><span style="line-height:40px;float:left;">业务简介：</span><div class="login_body_input"><input type="text" name="introduction" id="introduction" placeholder="业务简介" maxlength="50" /></div></li>
+				<li><span id="industry"></span></li>
+				<li><span id="service"></span></li>
+				<li><span style="line-height:40px;float:left;">融资金额：</span><div class="login_body_input"><input type="text" name="financing_amount" id="financing_amount" placeholder="融资金额" maxlength="6" /></div>（万元）</li>
+				<li><span style="line-height:40px;float:left;">行业分析：</span><div class="login_body_input"><input type="text" name="analysis_des" id="analysis_des" placeholder="行业分析" maxlength="255" /></div></li>
+				<li><span style="line-height:40px;float:left;">核心产品：</span><div class="login_body_input"><input type="text" name="product_des" id="product_des" placeholder="核心产品" maxlength="6" /></div></li>
+				<li><span style="line-height:40px;float:left;">业务亮点：</span><div class="login_body_input"><input type="text" name="enterprise_des" id="enterprise_des" placeholder="业务亮点" maxlength="6" /></div></li>
+				<li>
+					<div style="float:left;height:50px;width:72px;background:url('/static/common/img/up_bp.png')">
+						<input type="file" id="pro_file_bp" style="margin-top:-10px;opacity:0;filter:alpha(opacity=0);height:50px;width:72px;">
+						<input type="hidden" id="combpFile" name="com_bp_file" value="">
+					</div>
+				</li>
+				<li>
+				<div class="fileUploadContent" style="display:none;">
+					<div class="box">
+						<div class="fileItem" filecodeid="0">
+							<div class="imgShow">
+								<div class="fileType">PDF</div> 
+								<i class="iconfont icon-wenjian"></i> 
+							</div>
+							<div class="status">
+								<i class="iconfont icon-shanchu"></i>
+							</div> 
+							<div class="fileName"></div> 
+						</div>
+					</div>
+					</div>
+				</li>
+				<!-- <li><span style="line-height:40px;float:left;">BP：</span><div style="float:left;" id="plan" class="fileUploadContent"></div> 
+				</li>-->
+				<div class="input_error" id="add_error" style="display:none;"></div>
+			</ul>
+		</div>
+		<div style="float:left;height:900px;width:25%;">
+			<div style="float:left;height:45px;width:85px;background:url('/static/common/img/up_img.png')">
+				<input type="file" id="pro_file_img" style="margin-top:-10px;opacity:0;filter:alpha(opacity=0);height:45px;width:85px;">
+			</div>			
+			<input type="hidden" id="compressFile" name="com_file">
+			<div style="float:left;width:138px;height:138px;"><img src="" id="next"></div>
+		</div>
+	</div>
+	<div class="container" style="height:90px;">
+		<div class="login_submit" onclick="return addCheck()" title="提交" style="text-align:center;margin-top:0;margin-left:35%;">提&nbsp;交</div>
+	</div>
+	</form>
+	{include file="base/footer_new" /}
+</body>
+<script>
+	var service  = [];
+	var industry = [];
+	var vue = new Vue({
+	    el: "#box",
+	    data: {
+	    	serviceList: [],
+	    	industryList: [],
+	    },
+	    mounted: function() {
+	        this.$nextTick(function() {
+	        	 $.ajax({
+	                    url: '/home/dict/dictApi',
+	                    type: 'GET',
+	                    async: false,
+	                    dataType: 'json',
+	                    data: {}
+	                })
+	                .done(function(res) {
+	                    if (res.code == 200) {
+	                        vue.serviceList 	= res.data['data_s'];
+	                        vue.industryList  	= res.data['data_i'];
+	                        service  = vue.serviceList;
+	                        industry = vue.industryList;
+	                    }else{
+	                    	vue.serviceList 	= [];
+	                        vue.industryList 	= [];
+	                    }
+	                });
+	        	 
+	        	 $.fn.AddSelect = function (opation) {
+	                 var _arg   = $.extend({data: "", name:"",}, opation);
+	                 var _this1 = this;
+	                 if (_arg.data) {
+	                     var _dt    = _arg.data;
+	                     var _name  = _arg.name;
+	                     var _html  = "";
+	                     
+	                     _html 	   += '<select id="'+_name+'">'; //初级设置
+	                     _html 	   += '<option value="0">请选择</option>';
+	                     for (var i = 0; i < _dt.length; i++) {
+	                         _html += '<option value="' + _dt[i]['id'] + '|' + i + '">' + _dt[i]['value'] + '</option>';
+	                     }
+	                     _html     += '</select>';
+	                     $(_this1).html(_html);
+	                     
+	                     function _select1() {
+	                         $(_this1).children("select").change(function () {
+	                             var _this2 = this;
+	                             var _val   = $(_this2).val().split("|")[1];
+	                             
+	                             $(_this2).nextAll("select").remove();
+	                             var _sub   = _dt[_val]['sub'];
+	                             var _str   = "";
+	                             _str 	   += '<select>';
+                                 _str 	   += '<option value="0">请选择</option>';
+                                 for (var i = 0; i < _sub.length; i++) {
+                                     _str  += '<option value="' + _sub[i]['id'] + '">' + _sub[i]['value'] + '</option>';
+                                 }
+                                 _str += '</select>';
+                                 $(_this2).after(_str);
+	                         })
+	                     }
+	                     _select1();
+	                 }
+	             }
+	        	 $("#service").AddSelect({
+	                 data: service, 
+	                 name:"service_select",
+	             })
+	             
+	             $("#industry").AddSelect({
+	                 data: industry, 
+	                 name:"industry_select",
+	             })
+			});
+	    },
+	    methods: {
+	    	
+	    }
+	}); 
+	
+	$(function () {
+		$(".icon-shanchu").click(function(){
+			$("#combpFile").val('');
+			$(".fileName").html('');
+			$(".fileUploadContent").css("display","none");
+		});
+	});
+
+    
+	function addCheck(){
+		var pro_name      		= $("#addModal").find("input[name='pro_name']").val();
+		var company_name 	  	= $("#addModal").find("input[name='company_name']").val();
+        var introduction 	    = $("#addModal").find("input[name='introduction']").val();
+        var financing_amount	= $("#addModal").find("input[name='financing_amount']").val();
+        var analysis_des       	= $("#addModal").find("input[name='analysis_des']").val();
+        var product_des       	= $("#addModal").find("input[name='product_des']").val();
+        var enterprise_des		= $("#addModal").find("input[name='enterprise_des']").val();
+        
+        //var position      		= $("#addModal").find("input[name='position']").val();
+        var serviceType 	  	= $("#service_select").find("option:selected").val().split("|")[0];
+        var industryType 	  	= $("#industry_select").find("option:selected").val().split("|")[0];
+        
+        //var check 		  = $("input[type='checkbox']").is(':checked');
+        var _val   = serviceType.split("|")[0];
+        var com_file    = $("#addModal").find("input[name='com_file']").val();
+        var com_bp_file = $("#addModal").find("input[name='com_bp_file']").val();
+        
+        if (pro_name == '') {
+            $("#add_error").html("请输入项目简介");
+            $("#add_error").css("display","block");
+            return false;
+        }
+      
+        if (company_name == '') {
+            $("#add_error").html("请输入企业名称");
+            $("#add_error").css("display","block");
+            return false;
+        }
+        
+        if (introduction == '') {
+            $("#add_error").html("请输入业务简介");
+            $("#add_error").css("display","block");
+            return false;
+        }
+        
+        if(serviceType==0){
+        	$("#add_error").html("请选择行业");;
+            $("#add_error").css("display","block");
+            return false;
+        }
+        
+        if(industryType==0){
+        	$("#add_error").html("请选择业务");;
+            $("#add_error").css("display","block");
+            return false;
+        }
+        
+        if (financing_amount == '') {
+            $("#add_error").html("请输入融资金额");
+            $("#add_error").css("display","block");
+            return false;
+        }
+        
+        if (analysis_des == '') {
+            $("#add_error").html("请输入行业分析");
+            $("#add_error").css("display","block");
+            return false;
+        }
+        
+        if (product_des == '') {
+            $("#add_error").html("请输入核心产品");
+            $("#add_error").css("display","block");
+            return false;
+        }
+        
+        if (enterprise_des == '') {
+            $("#add_error").html("请输入业务亮点");
+            $("#add_error").css("display","block");
+            return false;
+        }
+        
+        $("#add_error").html("");
+        $("#add_error").css("display","none");
+        
+        $.ajax({
+            url: "{:url('project/doAdd')}",
+            data: {com_bp_file:com_bp_file,com_file:com_file,pro_name:pro_name, company_name:company_name, introduction:introduction, financing_amount:financing_amount, analysis_des:analysis_des, product_des:product_des, enterprise_des:enterprise_des},
+         
+            type: "POST",
+            dataType: 'json',
+            success: function(resp){
+            	if(resp.code==200){
+                    $("#add_error").css("display","none");
+            	}else {
+            		$("#add_error").html(resp.msg);
+                    $("#add_error").css("display","block");
+                }
+            }
+        });
+	}
+	
+	
+    </script>
+</html>
+

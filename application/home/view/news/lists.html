@@ -1,0 +1,214 @@
+{include file="base/header_new" /}
+	<div class="container" style="height:120px;">
+		<div class="index_header" style="margin-left:0px;">
+		<div style="float:left;margin-top:40px;width:500px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+			<ul>
+				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
+				<li><a href='{:url("IndustryReport/lists")}'  title="研报中心">研报中心</a></li>
+				<li><a style="font-size:22px;color:#222222;" href="javascript:;" title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Index/listproject")}' title="找资金">找资金</a></li>
+				<li><a href='{:url("Index/listorganize")}' title="找项目">找项目</a></li>
+				<li><a href="/" title="首页">首页</a></li>
+			
+			</ul>
+		</div>
+	</div>
+	<div id="box" class="container" style="height:1360px;">
+		<div class="detail_menu">
+			<a href="/" title="首页">首页</a> &nbsp;>&nbsp;
+			<a href="javascript:;" title="资讯中心">资讯中心</a>
+		</div>
+		<div style="float:left;width:890px;height:1000px;">
+			<div v-for="item in displayCareList" >
+				<div class="hot_news">
+					<a href="javascript:;" target="_blank" title="">
+					<div class="hot_news_content">
+						<div style="width:100%;height:38px;" @click="openView(item.item_url)"></div>
+						<div style="float:left;width:49px;height:190px;"  @click="openView(item.item_url)"></div>
+						<div class="list_sort_industry"  style="float:left;line-height:30px;width:68px;font-size:14px;margin-bottom:30px;">热门资讯</div> 
+						<div class="list_title" style="width:764px;margin-left:78px;margin-bottom:30px;" :title="item.title"  @click="openView(item.item_url)">&nbsp;&nbsp;{{item.title}}&nbsp;&nbsp;
+							<div  v-if="item.is_hot ==1" style="float:right;text-align:center;line-height:30px;color:#9191af;" >
+	                            <img src="/static/common/img/hot_icon.png" width="22" height="28">
+							</div>
+						</div>
+						<div class="list_content" style="float:left;width:840px;"  @click="openView(item.item_url)">
+							<div style="float:left;line-height:23px;">关键词</div>
+								<div class="list_industry" v-for="dt in item.dict_list"  style="margin-left:15px;" title="dfdf">&nbsp;&nbsp;{{dt.dict_name}}&nbsp;&nbsp;</div>
+						</div>
+						<div class="list_content" style="font-size:14px;width:840px;">关联项目<span class="list_service" style="margin-left:15px;" title="item.related_titl" @click="openView(item.related_url)">&nbsp;&nbsp;{{item.related_title}}&nbsp;&nbsp;</span>
+							<div class="icon-time" style="float:right;font-size:18px;text-align:center;line-height:30px;color:#9191af;" @click="openView(item.item_url)">
+								<span style="font-size:14px;">&nbsp;{{item.news_date}}</span>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				
+				<div style="height:10px;"></div>
+			</div>
+			<div class="page_list" style="width:520px;"></div>
+			<input type="hidden" id="current" value="1">
+			</div>
+		<div style="float:right;width:500px;height:1000px;">
+			{foreach name="$show['pro-data']['data']" item="pro"}
+				<div class="right_card">
+					<a href='{:url("Project/index",["id" => $pro.id])}' target="_blank" title="{$pro.name}">
+						<div class="right_card_content">
+							<div style=";width:450px;">
+								<div class="list_title" style="margin:22px 44px 27px 44px;line-height:50px;height:50px;" title="{$pro.name}">{$pro.name}
+									<div style="float:right;width:46px;height:46px;border-radius:23px;"><img src="/static/common/img/default.png"></div>
+								</div>
+							</div>
+							<div class="list_content" style="line-height:30px;margin-left:44px;height:60px;" title="{$pro.introduction}">{$pro.bottom}</div>
+							<div style="font-size:14px;margin:0 44px 44px 44px;line-height:40px;height:40px;">
+								<div style="float:left;color:#ff2359;"><span title="">{$pro.label1}</span><span style="margin-left:16px;" title="{$pro.label2}">{$pro.label2}</span></div>
+								<div style="float:left;width:50px;height:30px;"></div>
+								<div style="float:right;text-align:center;line-height:30px;color:#9191af;" title="{$pro.view_num}人浏览">{$pro.view_num}人浏览</div>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div style="float:right;width:450px;height:30px;"></div>
+			{/foreach}
+			
+			{foreach name="$show['org-data']['data']" item="org"}
+			<div class="right_card">
+					<a href='{:url("Organize/index",["id" => $org.id])}' target="_blank" title="{$org.name}">
+						<div class="right_card_content">
+							<div style=";width:450px;">
+								<div class="list_title" style="margin:22px 44px 27px 44px;line-height:50px;height:50px;" title="{$org.name}">{$org.name}
+									{if condition="$org.url eq '' "}
+										<div style="float:right;width:46px;height:46px;border-radius:23px;"><img src="/static/common/img/default.png"></div>
+									{else /}
+										<div class="item_bg" style="{$org.style_bg_url}"></div>
+									{/if}
+								</div>
+							</div>
+							<div class="list_content" style="line-height:30px;margin-left:44px;height:60px;" title="{$org.bottom}">{$org.bottom}</div>
+							<div style="font-size:14px;margin:0 44px 44px 44px;line-height:40px;height:40px;">
+								<div style="float:left;color:#2e77f5;">
+									{foreach name="$org.dict_list" item="rsdt"}
+									<span style="margin-right:8px;" title="{$rsdt.dict_name}">{$rsdt.dict_name}</span>
+									{/foreach}
+								</div>
+								<div style="float:left;width:50px;height:30px;"></div>
+								<div style="float:right;text-align:center;line-height:30px;color:#9191af;" title="{$org.view_num}人浏览">{$org.view_num}人浏览</div>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div style="float:right;width:450px;height:30px;"></div>
+			{/foreach}
+			<div style="float:right;width:450px;height:20px;"></div>
+			<div class="right_banner">
+				<a href="/home/project/index/id/127"><img src="/static/common/img/banner2.png" width="440"></a>
+			</div>
+			<div class="right_banner">
+				<a href="/home/project/index/id/128"><img src="/static/common/img/banner3.png" width="440"></a>
+			</div>
+			<div class="right_banner">
+				<a href="/home/project/index/id/125"><img src="/static/common/img/banner4.png" width="440"></a>
+			</div>
+		</div>
+	</div>
+	{include file="base/footer_new" /}
+	<script type="text/javascript">
+		var vue = new Vue({
+		    el: "#box",
+		    data: {
+		        displayCareList: [],
+		        pageCount: "",
+		        total: "",
+		    },
+		    mounted: function() {
+		        this.$nextTick(function() {
+		        	var current   = 1;
+		        	 $.ajax({
+		                    url: '/home/news/listApi',
+		                    type: 'GET',
+		                    async: false,
+		                    dataType: 'json',
+		                    data: { "page": current}
+		                })
+		                .done(function(res) {
+		                    if (res.code == 200) {
+		                        vue.displayCareList = res.data['data'];
+		                        console.log(vue.displayCareList);
+		                        vue.pageCount  		= res.data['page'];
+		                        vue.total 			= res.data['ptotal'];
+		                    }else{
+		                    	vue.displayCareList = [];
+		                        vue.pageCount 	 	= 0;
+		                        vue.total 			= 0;
+		                        $("#searchnone").css('display','block'); 
+		                    }
+		                });
+		        	 
+		        	 
+					$('.page_list').pagination({
+		        		pageCount: vue.pageCount,
+		        		current:current,
+		        		callback: function (api) {
+		        			$('.now').text(api.getCurrent());
+		        		}
+		        	}, function (api) {
+		        		$('.now').text(api.getCurrent());
+		        	});
+					
+					var str_w = vue.pageCount*60+60;
+					$('.page_list').css({"width":str_w+"px"});
+					
+				});
+		    },
+		    methods: {
+		    	openView: function(url) {
+		    		window.location.href = url;
+		    	}
+		    }
+		}); 
+		
+		
+		function orderclick(current){
+			var keyword      = $("#keyword").val();
+			var key_sign 	 = $("#key_sign").val();
+			var key_industry = $("#key_industry").val();
+			var key_size 	 = $("#key_size").val();
+			var key_area 	 = $("#key_area").val();
+			$("#current").val(current);
+			$.ajax({
+	            url: '/home/news/listApi',
+	            type: 'GET',
+	            async: false,
+	            dataType: 'json',
+	            data: { "page": current,"keyword":keyword,"key_sign":key_sign,"key_industry":key_industry,"key_size":key_size,"key_area":key_area}
+	        })
+	        .done(function(res) {
+	            if (res.code == 200) {
+	                vue.displayCareList = res.data['data'];
+	                vue.pageCount  		= res.data['page'];
+	                vue.total 			= res.data['total'];
+	                if(vue.total==1){
+	                	$('.page_list').css('display','none'); 
+	                }
+	                $("#searchnone").css('display','none'); 
+	            }else{
+	            	vue.displayCareList = [];
+	                vue.pageCount 	 	= 0;
+	                vue.total 			= 0;
+	                $("#searchnone").css('display','block'); 
+	            }
+	            $('.page_list').pagination({
+	        		pageCount: vue.pageCount,
+	        		current:current,
+	        		callback: function (api) {
+	        			$('.now').text(api.getCurrent());
+	        		}
+	        	}, function (api) {
+	        		$('.now').text(api.getCurrent());
+	        	});
+	        });
+		}
+		</script>
+	</body>
+</html>
+	

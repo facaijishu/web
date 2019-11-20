@@ -1,0 +1,139 @@
+{include file="base/header_new" /}
+	<script>
+   		var captcha_url = "{:captcha_src()}";
+	</script>
+	<div class="register">
+		<div class="register_main">
+			<!-- <div class="register_left">
+				<img src="/images/zc/zc_077.jpg" />
+			</div>-->
+			<div class="register_right">
+				<div class="register_title"></div>
+				<div id="sendCode" class="activity_tel_btn" onclick="yzm()" style="cursor:pointer;">忘记密码</div>
+				<form action="/home/member/dologin" method="post" id="forgetModal">
+					<table border="0" cellspacing="0" cellpadding="0" class="register_table">
+						<tr>
+							<td class="register_td">手机号：</td>
+							<td colspan="3">
+								<input type="text" name="phone" id="phone" value=""  placeholder="请填写您的手机号" class="register_input1" />
+								<div class="register_ts hide" id="phone_error"></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="register_td">图形验证码：</td>
+							<td>
+								<input type="text" name="imgcode" id="imgcode" placeholder="请输入图形验证码"  width="85" maxlength="6" class="register_input1 register_input2"  />
+								<div class="register_ts hide" id="imgcode_error"></div>
+							</td>
+							<td>
+								<div id="" class="activity_tel_btn" onclick="javascript:document.getElementById('codeimage').src=captcha_url+'?v=' + Math.random();"  style="cursor:pointer;">
+									<div class="code">
+					                    <div class="code-img">
+					                        <img src="{:captcha_src()}" name="codeimage" id="codeimage" border="0">
+					                    </div>
+					                </div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="register_td">手机验证码：</td>
+							<td>
+								<input type="text" name="regcode" id="regcode" placeholder="请输入验证码" onfocus="changeIcon('regcode','请输入手机验证码')" width="85" maxlength="6" class="register_input1 register_input2"  />
+								<div class="register_ts hide" id="regcode_error"></div>
+							</td>
+							<td>
+								<div id="sendCode" class="activity_tel_btn" onclick="modify()" style="cursor:pointer;">获取验证码</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="register_td">新密码：</td>
+							<td>
+								<input type="password" name="password" value="" id="password" placeholder="密码" />
+								<div class="register_ts hide" id="regcode_error"></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="register_td">确认新密码：</td>
+							<td>
+								<input type="password" name="compassword" value="" id="compassword" placeholder="密码"  />
+								<div class="register_ts hide" id="regcode_error"></div>
+							</td>
+						</tr>
+			  		</table>
+			  		<p id="checkCodeError" style="margin-left:117px;"></p>
+					<div class="register_btn">
+						<input type="submit"  value="登录" onclick="return forgetCheck()"/>
+					</div>
+				</form>
+			  		
+				</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+	$(function () {
+		$("#check").click(function(){
+			if ($(this).is(':checked')) {
+				$("#forgetModal").find("input[name='rember']").val(1);
+			}else{
+				$("#forgetModal").find("input[name='rember']").val(0);
+			}
+		});
+	});
+	
+	function forgetCheck(){ 
+		var phone	 	= $("#forgetModal").find("input[name='phone']").val();
+		var imgcode	 	= $("#forgetModal").find("input[name='imgcode']").val();
+		var regcode	 	= $("#forgetModal").find("input[name='regcode']").val();
+		var password 	= $("#forgetModal").find("input[name='password']").val();
+		var compassword = $("#forgetModal").find("input[name='compassword']").val();
+		if(phone==""){
+			$("#phone_error").html("请输入手机号");
+			$("#phone_error").attr("class","register_ts");
+			return false;
+		}else{
+			if (!(/^1(3|4|5|6|7|8)\d{9}$/.test(phone))) {
+		    	$("#phone_error").html("请输入正确的手机号");
+		    	$("#phone_error").attr("class","register_ts");
+		        return false;
+		    }
+		}
+		
+		if(imgcode==""){
+			$("#phone_error").html("请输入图形验证码");
+			$("#phone_error").attr("class","register_ts");
+			return false;
+		}
+		
+		if(regcode==""){
+			$("#phone_error").html("请输入手机验证码");
+			$("#phone_error").attr("class","register_ts");
+			return false;
+		}
+		
+		if(password==""){
+			$("#phone_error").html("请输入新密码");
+			$("#phone_error").attr("class","register_ts");
+			return false;
+		}
+		
+		if(compassword==""){
+			$("#phone_error").html("请输入新密码");
+			$("#phone_error").attr("class","register_ts");
+			return false;
+		}
+		
+		if(password!==""&&compassword!==""){
+			if(password!==compassword){
+				$("#oldpassword_error").html("两次输入的新密码不一致");
+				$("#oldpassword_error").attr("class","register_ts");
+				return false;
+			}
+		}
+		
+	}
+	
+</script>

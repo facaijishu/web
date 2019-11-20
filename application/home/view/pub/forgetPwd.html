@@ -1,0 +1,182 @@
+{include file="base/header_new" /}
+	<script>
+   		var captcha_url = "{:captcha_src()}";
+	</script>
+	<div style="background: url(/static/common/img/register_bg.jpg) no-repeat;background-size:100% 100%;height:1200px;position:relative;">
+		<div class="container">
+			<div class="register" style="height:680px;top:200px;">
+				<div class="register_main">
+					<div class="login_head">
+						<div id="head1" class="login_head_actived">
+							<a href="javascript:void(0);" title="忘记密码">忘记密码</a>
+						</div>
+					</div>
+					<form action="/home/pub/doForgetPwd" method="post" id="forgetModal">
+						<div class="login_body" style="margin-top:40px;height:360px;">
+							<ul style="height:360px;">
+								<li><div class="login_body_input"><input type="text" name="phone" id="phone" value=""  placeholder="请填写您的手机号" /></div></li>
+								<li>
+									<div class="login_body_input_short"><input type="text" name="imgcode" id="imgcode" placeholder="请输入图形验证码" maxlength="6" onBlur="checkPhone()" /></div>
+									<div id="" class="" onclick="javascript:document.getElementById('codeimage').src=captcha_url+'?v=' + Math.random();"  style="float:left;margin-left:10px;cursor:pointer;">
+										<div class="code">
+						                    <div class="code-img">
+						                        <img src="{:captcha_src()}" name="codeimage" id="codeimage" border="0">
+						                    </div>
+						                </div>
+									</div>
+								</li>
+								<li>
+									<div class="login_body_input_short"><input type="text" name="regcode" id="regcode" placeholder="手机验证码" onfocus="changeIcon('regcode','请输入手机验证码')" /></div>
+									<div id="sendCode" class="verify_code_btn" onclick="getVerifyCode()" style="cursor:pointer;">获取验证码</div>
+								</li>
+								<li><div class="login_body_input"><input type="password" name="password" value="" id="password" style="width:200px;" placeholder="新密码（至少6位，区分大小写）"/></div></li>
+								<li><div class="login_body_input"><input type="password" name="compassword" value="" id="compassword" placeholder="确认新密码"/></div></li>
+								<div class="input_error" id="forget_error" style="display:none;margin-top:-8px;"></div>
+							</ul>
+						</div>
+						<div class="login_submit" onclick="return forgetCheck()" title="确认" style="text-align:center;margin:0px 48px 0 48px;">确&nbsp;认</div>
+					<div style="text-align:center;font-size:14px;color:#979797;">已有FA財帐号，<a style="cursor: pointer;color:#357cf6;" href='{:url("pub/login")}' title="马上登录">马上登录>></a></div>
+					</form>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div style="position:absolute;top:900px;width:100%;color:#fff;font-size:12px;font-weight:100px;text-align:center;">
+				&copy;2019&nbsp;上海歆宝信息科技有限公司&nbsp;
+				<a style="color:#fff;" href="http://www.miibeian.gov.cn" target="_blank">沪ICP备17044635号 </a>&nbsp;
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+
+	function forgetCheck(){ 
+		var phone	 	= $("#forgetModal").find("input[name='phone']").val();
+		var imgcode	 	= $("#forgetModal").find("input[name='imgcode']").val();
+		var regcode	 	= $("#forgetModal").find("input[name='regcode']").val();
+		var password 	= $("#forgetModal").find("input[name='password']").val();
+		var compassword = $("#forgetModal").find("input[name='compassword']").val();
+		if(phone==""){
+			$("#forget_error").html("请输入手机号");
+			$("#forget_error").css("display","block");
+			return false;
+		}else{
+			if (!(/^1(3|4|5|6|7|8)\d{9}$/.test(phone))) {
+		    	$("#forget_error").html("请输入正确的手机号");
+		    	$("#forget_error").css("display","block");
+		        return false;
+		    }
+		}
+		
+		if(imgcode==""){
+			$("#forget_error").html("请输入图形验证码");
+			$("#forget_error").css("display","block");
+			return false;
+		}
+		
+		if(regcode==""){
+			$("#forget_error").html("请输入手机验证码");
+			$("#forget_error").css("display","block");
+			return false;
+		}
+		
+		if(password==""){
+			$("#forget_error").html("请输入新密码");
+			$("#forget_error").css("display","block");
+			return false;
+		}
+		
+		if(compassword==""){
+			$("#forget_error").html("请输入新密码");
+			$("#forget_error").css("display","block");
+			return false;
+		}
+		
+		if(password!==""&&compassword!==""){
+			if(password!==compassword){
+				$("#forget_error").html("两次输入的新密码不一致");
+				$("#forget_error").css("display","block");
+				return false;
+			}
+		}
+		
+		 $.ajax({
+		        url: "/home/pub/doForgetPwd",
+		        type: 'POST',
+		        dataType: 'json',
+		        data: {phone:phone, password:password, compassword:compassword, imgcode:imgcode, regcode:regcode},
+		        success: function(res){
+		        	if (res.code == 200) {
+		        		 window.location.href = "/home/pub/login";
+		            }else {
+		            	$("#forget_error").html(res.msg);
+		                $("#forget_error").css('display','block'); 
+		            }
+		        }
+		    })
+		
+	}
+	
+	/**
+	 * 获取验证码
+	 * @returns
+	 */
+	function getVerifyCode(){ 
+		var phone	 = $("#forgetModal").find("input[name='phone']").val();
+		var imgcode	 = $("#forgetModal").find("input[name='imgcode']").val();
+		if(phone==""){
+			$("#forget_error").html("请填写手机号");
+			$("#forget_error").css('display','block'); 
+			return false;
+		}
+		
+		if (!(/^1(3|4|5|6|7|8)\d{9}$/.test(phone))) {
+	    	$("#forget_error").html("请填写正确的手机号");
+	    	$("#forget_error").css('display','block'); 
+	        return false;
+	    }
+		
+		if(imgcode==""){
+			$("#forget_error").html("请填写图形验证码");
+			$("#forget_error").css('display','block'); 
+			return false;
+		}
+			
+		if ($("#sendCode").hasClass('verify_code_btn')) {
+			$("#sendCode").removeClass("verify_code_btn");
+			$("#sendCode").addClass("verify_code_btn_gray");
+			$.ajax({
+				url: "{:url('Pub/getNumber')}",
+                type: 'POST',
+                dataType: 'json',
+                data: {"phone": phone,"imgcode":imgcode,"type": 2},
+                success: function(res){
+                	console.log(res.msg);
+                	console.log(res.code);
+                	if (res.code == 200) {
+                		$("#forget_error").css('display','none'); 
+                        var i = 60;
+                        var it = setInterval(function(){
+                            if (i > 0) {
+                                $("#sendCode").html(i +" s");
+                            }else {
+                                $("#sendCode").removeClass("verify_code_btn_gray");
+                                $("#sendCode").addClass("verify_code_btn");
+                                $("#sendCode").html("获取验证码");
+                                clearInterval(it);
+                            }
+                            i--;
+                        }, 1000);
+                    }else {
+                    	$("#sendCode").removeClass("verify_code_btn_gray");
+            			$("#sendCode").addClass("verify_code_btn");
+                    	$("#forget_error").html(res.msg);
+                    	$("#forget_error").css('display','block'); 
+                    }
+                }
+            })
+		}
+	}
+	
+</script>

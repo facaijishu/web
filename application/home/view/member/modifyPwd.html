@@ -1,0 +1,97 @@
+{include file="base/header_new" /}
+	<script>
+	    var captcha_url = "{:captcha_src()}";
+	</script>
+	<div class="register">
+		<div class="register_main">
+			<!-- <div class="register_left">
+				<img src="/images/zc/zc_077.jpg" />
+			</div>-->
+			<div class="register_right">
+				<div class="register_title"></div>
+				<div id="sendCode" class="activity_tel_btn" onclick="yzm()" style="cursor:pointer;">修改密码</div>
+				<form action="/home/member/doModifyPwd" method="post" id="pwdModal">
+					<table border="0" cellspacing="0" cellpadding="0" class="register_table">
+						<tr>
+							<td class="register_td">原密码：</td>
+							<td colspan="3">
+								<input type="password" name="oldpassword" value="" id="oldpassword" placeholder="原密码" class="register_input1" />
+								<div class="register_ts hide" id="oldpassword_error"></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="register_td">新密码：</td>
+							<td>
+								<input type="password" name="newpassword" value="" id="newpassword" placeholder="新密码" onBlur="change()" class="register_input1" />
+									<div class="register_ts hide" id="newpassword_error"></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="register_td">确认新密码：</td>
+							<td>
+								<input type="password" name="compassword" value="" id="compassword" placeholder="确认新密码" onBlur="change()" class="register_input1" />
+								<div class="register_ts hide" id="compassword_error"></div>
+							</td>
+						</tr>
+			  		</table>
+			  		<p id="checkCodeError" style="margin-left:117px;"></p>
+					<div class="register_btn">
+						<input type="submit"  value="提交" onclick="return modifycheck()"/>
+					</div>
+				</form>
+				</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+
+</body>
+</html>
+
+<script>
+	function change(){
+		var newpassword	 = $("#pwdModal").find("input[name='newpassword']").val();
+		var compassword	 = $("#pwdModal").find("input[name='compassword']").val();
+		if(newpassword!==""&&compassword!==""){
+			if(newpassword!==compassword){
+				$("#oldpassword_error").html("两次输入的新密码不一致");
+				$("#oldpassword_error").attr("class","register_ts");
+				return false;
+			}
+		}
+	}
+	
+	function modifycheck(){ 
+		var oldpassword	 = $("#pwdModal").find("input[name='oldpassword']").val();
+		var newpassword	 = $("#pwdModal").find("input[name='newpassword']").val();
+		var compassword	 = $("#pwdModal").find("input[name='compassword']").val();
+		
+		if(oldpassword==""){
+			$("#oldpassword_error").html("请输入原密码");
+			$("#oldpassword_error").attr("class","register_ts");
+			return false;
+		}
+		if(newpassword==""){
+			$("#newpassword_error").html("请输入新密码");
+			$("#newpassword_error").attr("class","register_ts");
+			return false;
+		}
+		if(compassword==""){
+			$("#compassword_error").html("请再次输入新密码");
+			$("#compassword_error").attr("class","register_ts");
+			return false;
+		}
+		
+		if(newpassword!==""&&compassword!==""){
+			if(newpassword!==compassword){
+				$("#oldpassword_error").html("两次输入的新密码不一致");
+				$("#oldpassword_error").attr("class","register_ts");
+				return false;
+			}
+		}
+	}
+	
+	
+</script>
+
+
+
