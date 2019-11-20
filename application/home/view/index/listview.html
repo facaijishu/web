@@ -1,0 +1,338 @@
+{include file="base/header_new" /}
+	<div class="container" style="height:120px;">
+		<div class="index_header" style="margin-left:0px;">
+			<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+			<ul>
+				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
+				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
+				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Index/listorganize")}' title="找资金">找资金</a></li>
+				<li><a href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
+				<li><a style="font-size:22px;color:#222222;" href="/" title="首页">首页</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container" style="height:210px;">
+		<div class="index_search_s" style="top:0;">
+			<div class="detail_menu">
+				<a href="/" title="首页">首页</a> &nbsp;>&nbsp;
+				<a href="javascript:;" title="搜索">搜索</a>
+			</div>
+		
+			<div class="index_search_left_s">
+				<div style="margin:0 32px 0 32px;"><img src="/static/common/img/search_icon.png"></div>
+			</div>
+			<div class="index_search_mid_s">
+				<input type="text" placeholder="输入项目、资金、需求" id="keyword" value="{$v_keyword}">
+			</div>
+			<div class="index_search_right_s"><a href="javascript:;" onclick="searchKey()" title="立即搜索">立即搜索</a></div>
+		</div>
+	</div>
+	<div class="container" style="height:80px;">
+		<div class="list_icon">
+			<a href="javascript:;" id="pro_href" onclick="viewList(1)" style="color:#357cf6;" title="项目">
+				<img src="/static/common/img/pro_icon_on.png" id="pro_on">
+				<img src="/static/common/img/pro_icon_off.png" id="pro_off" style="display:none">
+				&nbsp;&nbsp;项目
+			</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="javascript:;" id="org_href" onclick="viewList(2)" title="资金">
+				<img src="/static/common/img/org_icon_on.png" id="org_on" style="display:none">
+				<img src="/static/common/img/org_icon_off.png" id="org_off">
+				&nbsp;&nbsp;资金
+			</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<!-- <a href="javascript:;" id="find_href" onclick="viewList(3)" title="发现">
+				<img src="/static/common/img/org_icon_on.png" id="find_on" style="display:none">
+				<img src="/static/common/img/org_icon_off.png" id="find_off">
+				&nbsp;&nbsp;发现
+			</a>-->
+		</div>
+	</div>
+	<div id="box" class="container" style="height:840px;">
+		<div id="jin_list" class="view_list" >
+			<div id="pro_view" style="width:100%;height:100%;">
+				<div v-if="totalP == 0" style="margin-top:100px;text-align:center;">
+					<img src="/static/common/img/no_list.png">
+		    	</div>
+		    	<div v-else>
+					<div class="hot_item" v-for="item in displayPList" style="width:430px;margin-right:48px;">
+						<a :href='item.link' target="_blank">
+							<div class="hot_item_content">
+								<div style="width:450px;">
+									<div class="list_title" style="margin:22px 44px 27px 44px;line-height:50px;height:50px;" title="{{item.name}}">{{item.name}}
+										<div style="float:right;width:46px;height:46px;border-radius:23px;"><img src="/static/common/img/default.png"></div>
+									</div>
+								</div>
+								<div class="list_content" style="line-height:30px;width:360px;margin-left:44px;height:60px;" title="{{item.bottom}}">{{item.bottom}}</div>
+								<div style="font-size:14px;margin:0 44px 44px 44px;line-height:40px;height:40px;">
+									<div style="float:left;color:#ff2359;"><span title="{{item.label1}}">{{item.label1}}</span><span style="margin-left:16px;" title="{{item.label2}}">{{item.label2}}</span></div>
+									<div style="float:left;width:50px;height:30px;"></div>
+									<div style="float:right;text-align:center;line-height:30px;color:#9191af;" title="{{bottom.view_num}}人浏览">{{item.view_num}}人浏览</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<!--  <div class="page_list_p" style="height:50px;border:solid 1px #ff0000;"></div>-->
+				<input type="hidden" id="currentP" value="1">
+		    </div>
+			<div id="org_view" style="display:none;">
+				<div v-if="totalO == 0" style="margin-top:100px;text-align:center;">
+					<img src="/static/common/img/no_list.png">
+			    </div>
+			    <div v-else>
+			    
+			    	<div class="hot_item"  v-for="item in displayOList" style="margin:0 30px 40px 30px;">
+						<a href='' target="_blank">
+							<div class="hot_item_content">
+								<div style="width:450px;">
+									<div class="list_title" style="margin:22px 44px 27px 44px;line-height:50px;height:50px;" title="{{item.name}}">{{item.name}}
+										<div style="float:right;width:46px;height:46px;border-radius:23px;"><img src="/static/common/img/default.png"></div>
+									</div>
+								</div>
+								<div class="list_content" style="line-height:30px;margin-left:44px;height:60px;" title="{{item.bottom}}">{{item.bottom}}</div>
+								<div style="font-size:14px;margin:0 44px 44px 44px;line-height:40px;height:40px;">
+									<div style="float:left;color:#ff2359;"><span title=""></span><span style="margin-left:16px;" title=""></span></div>
+									<div style="float:left;width:50px;height:30px;"></div>
+									<div style="float:right;text-align:center;line-height:30px;color:#9191af;" title="{{item.view_num}}人浏览">{{item.view_num}}人浏览</div>
+								</div>
+							</div>
+						</a>
+					</div>
+			    </div>
+			</div>
+			<!-- <div class="page_list_o" style="width:380px;"></div>-->
+			<input type="hidden" id="currentO" value="1">
+			
+			<div id="find_view" style="display:none;">
+				<div v-if="totalO == 0" style="margin-top:100px;text-align:center;">
+					<img src="/static/common/img/no_list.png">
+			    </div>
+			    <div v-else>
+			    
+			    	<div class="hot_item"  v-for="item in displayOList" style="margin:0 30px 40px 30px;">
+						<a href='' target="_blank">
+							<div class="hot_item_content">
+								<div style="width:450px;">
+									<div class="list_title" style="margin:22px 44px 27px 44px;line-height:50px;height:50px;" title="{{item.name}}">{{item.name}}
+										<div style="float:right;width:46px;height:46px;border-radius:23px;"><img src="/static/common/img/default.png"></div>
+									</div>
+								</div>
+								<div class="list_content" style="line-height:30px;margin-left:44px;height:60px;" title="{{item.bottom}}">{{item.bottom}}</div>
+								<div style="font-size:14px;margin:0 44px 44px 44px;line-height:40px;height:40px;">
+									<div style="float:left;color:#ff2359;"><span title=""></span><span style="margin-left:16px;" title=""></span></div>
+									<div style="float:left;width:50px;height:30px;"></div>
+									<div style="float:right;text-align:center;line-height:30px;color:#9191af;" title="{{item.view_num}}人浏览">{{item.view_num}}人浏览</div>
+								</div>
+							</div>
+						</a>
+					</div>
+			    </div>
+			</div>
+			<!-- <div class="page_list_o" style="width:380px;"></div>-->
+			<input type="hidden" id="currentO" value="1">
+			
+		</div>
+		<div class="container_right" style="height:100%;float:left;">
+			<div class="right_banner">
+				<a href="/home/project/index/id/127"><img src="/static/common/img/banner2.png" width="440"></a>
+			</div>
+			<div class="right_banner">
+				<a href="/home/project/index/id/128"><img src="/static/common/img/banner3.png" width="440"></a>
+			</div>
+			<div class="right_banner">
+				<a href="/home/project/index/id/125"><img src="/static/common/img/banner4.png" width="440"></a>
+			</div>
+		</div>
+	</div>
+	<div class="container" style="height:40px;"></div>
+	{include file="base/footer_new" /}
+	<script type="text/javascript">
+	var h 			= $("#jin_list").height();
+	var jinxuan_h  = h + 250;
+	
+	function viewList(id){
+		if(id==1){
+			$("#pro_view").show(); 
+			$("#org_view").hide(); 
+			$("#find_view").hide();
+			$("#pro_href").css("color","#357cf6");
+			$("#org_href").css("color","#666");
+			$("#find_href").css("color","#666");
+			$("#pro_on").show(); 
+			$("#pro_off").hide();
+			$("#org_on").hide(); 
+			$("#org_off").show();
+			$("#find_on").hide(); 
+			$("#find_off").show();
+			
+		}
+		if(id==2){
+			$("#pro_view").hide(); 
+			$("#org_view").show();
+			$("#find_view").hide();
+			$("#pro_href").css("color","#666");
+			$("#org_href").css("color","#357cf6");
+			$("#find_href").css("color","#666");
+			$("#pro_on").hide(); 
+			$("#pro_off").show();
+			$("#org_on").show(); 
+			$("#org_off").hide();
+			$("#find_on").hide(); 
+			$("#find_off").show();
+		}
+		
+		if(id==3){
+			$("#pro_view").hide(); 
+			$("#org_view").hide();
+			$("#find_view").show();
+			$("#pro_href").css("color","#666");
+			$("#org_href").css("color","#666");
+			$("#find_href").css("color","#357cf6");
+			$("#pro_on").hide(); 
+			$("#pro_off").show();
+			$("#org_on").hide(); 
+			$("#org_off").show();
+			$("#find_on").show(); 
+			$("#find_off").hide();
+		}
+		
+		
+	}
+	
+	function searchKey(){
+		var keyword = $("#keyword").val();
+		if(keyword!=''){
+        	var currentP = $("#currentP").val();
+        	var currentO = $("#currentO").val();
+        	var keyword  = $("#keyword").val();
+        	 $.ajax({
+                    url: '/home/index/listViewApi',
+                    type: 'GET',
+                    async: false,
+                    dataType: 'json',
+                    data: { "pageP": currentP,"pageO": currentO,"keyword":keyword}
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                    	if(res.data['code_p'] ==200){
+                    		 vue.displayPList 	= res.data['data_p'];
+                             vue.pageCountP  	= res.data['page_p'];
+                             vue.totalP 			= res.data['total_p'];
+                    	}else{
+                    		vue.displayPList 	= [];
+                            vue.pageCountP  	= 0;
+                            vue.totalP 			= 0;
+                    	}
+                    	if(res.data['code_o'] ==200){
+                    		vue.displayOList 	= res.data['data_o'];
+                            vue.pageCountO  	= res.data['page_o'];
+                            vue.totalO 			= res.data['total_o'];
+                    	}else{
+                    		vue.displayOList 	= [];
+                            vue.pageCountO  	= 0;
+                            vue.totalO 			= 0;
+                    	}
+                        
+                    }else{
+                    	vue.displayPList 	= [];
+                        vue.pageCountP  	= 0;
+                        vue.totalP 			= 0;
+                        vue.displayOList 	= [];
+                        vue.pageCountO  	= 0;
+                        vue.totalO 			= 0;
+                        //$("#searchnone").css('display','block'); 
+                    }
+                });
+		}
+	}
+	
+	
+	var vue = new Vue({
+	    el: "#box",
+	    data: {
+	        displayPList: [],
+	        pageCountP: "",
+	        totalP: "",
+	        displayOList: [],
+	        pageCountO: "",
+	        totalO: "",
+	    },
+	    mounted: function() {
+	        this.$nextTick(function() {
+	        	var currentP   = 1;
+	        	var currentO   = 1;
+	        	var keyword    = $("#keyword").val();
+	        	 $.ajax({
+	                    url: '/home/index/listViewApi',
+	                    type: 'GET',
+	                    async: false,
+	                    dataType: 'json',
+	                    data: { "pageP": currentP,"pageO": currentO,"keyword":keyword}
+	                })
+	                .done(function(res) {
+	                    if (res.code == 200) {
+	                    	if(res.data['code_p'] ==200){
+	                    		 vue.displayPList 	= res.data['data_p'];
+	                             vue.pageCountP  	= res.data['page_p'];
+	                             vue.totalP 			= res.data['total_p'];
+	                    	}else{
+	                    		vue.displayPList 	= [];
+	                            vue.pageCountP  	= 0;
+	                            vue.totalP 			= 0;
+	                    	}
+	                    	if(res.data['code_o'] ==200){
+	                    		vue.displayOList 	= res.data['data_o'];
+	                            vue.pageCountO  	= res.data['page_o'];
+	                            vue.totalO 			= res.data['total_o'];
+	                    	}else{
+	                    		vue.displayOList 	= [];
+	                            vue.pageCountO  	= 0;
+	                            vue.totalO 			= 0;
+	                    	}
+	                    }else{
+	                    	vue.displayPList 	= [];
+	                        vue.pageCountP  	= 0;
+	                        vue.totalP 			= 0;
+	                        vue.displayOList 	= [];
+	                        vue.pageCountO  	= 0;
+	                        vue.totalO 			= 0;
+	                    }
+	                });
+	        	 
+	        	 $("#keyword").keydown(function(event) {
+		                if (event.which == 13) {
+		                	searchKey();
+		                }
+		            });
+	        	 
+	        	 
+				/*$('.page_list_p').pagination({
+	        		pageCount: vue.pageCountP,
+	        		current:currentP,
+	        		callback: function (api) {
+	        			$('.now').text(api.getCurrent());
+	        		}
+	        	}, function (api) {
+	        		$('.now').text(api.getCurrent());
+	        	});
+				
+				$('.page_list_o').pagination({
+	        		pageCount: vue.pageCountO,
+	        		current:currentO,
+	        		callback: function (api) {
+	        			$('.now').text(api.getCurrent());
+	        		}
+	        	}, function (api) {
+	        		$('.now').text(api.getCurrent());
+	        	});*/
+				
+			});
+	    },
+	    methods: {
+	    	
+	    }
+	}); 
+	
+	</script>
+	</body>
+</html>

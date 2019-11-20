@@ -1,0 +1,457 @@
+{include file="base/header_new" /}
+	<div class="container" style="height:120px;">
+		<div class="index_header" style="margin-left:0px;">
+			<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+			<ul>
+				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
+				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
+				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Index/listorganize")}' title="找资金">找资金</a></li>
+				<li><a style="font-size:22px;color:#222222;" href="javascript:;" title="找项目">找项目</a></li>
+				<li><a href="/" title="首页">首页</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container" style="height:210px;">
+		<div class="index_search_s" style="top:0;">
+			<div class="detail_menu">
+				<a href="/" title="首页">首页</a> &nbsp;>&nbsp;
+				<a href="javascript:;" title="项目">项目</a>
+			</div>
+			<div class="index_search_left_s">
+				<div style="margin:0 32px 0 32px;"><img src="/static/common/img/search_icon.png"></div>
+			</div>
+			<div class="index_search_mid_s">
+				<input type="text" placeholder="输入项目、需求" id="keyword" value="">
+			</div>
+			<div class="index_search_right_s"><a href="javascript:;" onclick="searchKey()" title="立即搜索">立即搜索</a></div>
+		</div>
+	</div>
+	<div id="select_id" class="container" style="height:370px;">
+		<div class="index_select">
+		     <div>
+		        <p class="shaixuan-tj">
+		            <span><a href="javascript:;">筛选条件</a></span>
+		            <i class="icon-angle-right"></i>
+		        </p>
+				<input type="hidden" id="key_sign" value="0">
+				<input type="hidden" id="key_industry" value="0">
+				<input type="hidden" id="key_size" value="0">
+				<input type="hidden" id="key_area" value="0">
+		        <p id="sxbtn" class="shaixuan-btn"><span><em style="font-style:normal">收起筛选</em><i class="icon-angle-up"></i></span></p>
+		    </div>
+		    <div id="page-search-store" class="sxcon">
+		        <div class="search-by">
+		            <dl class="relative">
+		                <dt class="service_title"><span class="title_dt">业务细分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		                {foreach name="$service" item="it"}
+		                	<a href="javascript:;" data-id="{$it.id}" id="href_{$it.id}" onclick="show_s({$it.id})">{$it.value}<i class="icon-angle-down" id="sicon_{$it.id}"></i></a>
+		                {/foreach}
+		                </dt> 
+		                {foreach name="$service" item="it"}
+		                	<dd class="show-con" id="service_{$it.id}" data-appid="{$it.id}" style="display:none;">
+		                	{foreach name="$it.sub" item="sub"}
+		                		<a href="/" data-id="{$sub.id}">{$sub.value}</a>
+		                	{/foreach}
+		                	</dd>
+		                {/foreach}
+					</dl>
+					<dl class="relative">
+		                <dt class="industry_title"><div class="title_dt">行业细分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		                 <div style="width:1100px;float:left;">
+		                {foreach name="$industry" item="it"}
+		                	<a href="javascript:;" data-id="{$it.id}" id="href_{$it.id}"  onclick="show_in({$it.id})">{$it.value}<i class="icon-angle-down" id="in_icon_{$it.id}"></i></a>
+		                {/foreach}
+		                </div>
+		                </dt>
+		                {foreach name="$industry" item="it"}
+		                	<dd class="show-con" id="industry_{$it.id}" data-appid="{$it.id}" style="display:none;">
+		                	{foreach name="$it.sub" item="sub"}
+		                		<a href="/" data-id="{$sub.id}">{$sub.value}</a>
+		                	{/foreach}
+		                	</dd>
+		                {/foreach}
+					</dl> 
+					<dl class="relative">
+		                <dt class="size_title"><span class="title_dt" style="float:left;">投资规模&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		                {foreach name="$size" item="it"}
+		                	<div style="float:left;" class="show-con" ><a href="/" data-id="{$it.id}">{$it.value}</a></div>
+		                {/foreach}
+		                </dt> 
+					</dl> 
+					<dl class="relative">
+		             	<dt class="area_title">
+		             	 <div class="title_dt">地区选择&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		                 <div style="width:1100px;float:left;">
+		                {foreach name="$province" item="it"}
+		                	<div style="float:left;" class="show-con" ><a href="/" data-id="{$it.id}">{$it.value}</a></div>
+		                {/foreach}
+		                </div>
+		                </dt> 
+					</dl>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	
+	<div id="box" class="container" style="height:840px;">
+		<div class="view_list">
+			<div style="width:960px;height:100%;">
+				<div v-if="total == 0" style="text-align:center;">
+					<img src="/static/common/img/no_list.png">
+		    	</div>
+		    	<div v-else>
+		    		<div class="hot_item" style="width:430px;margin-right:48px;" v-for="item in displayCareList">
+						<a :href='item.link' target="_blank">
+						<div class="hot_item_content">
+							<div class="list_title" style="margin:22px 44px 27px 44px;line-height:50px;height:50px;" :title="item.name">{{item.name}}
+								<div style="float:right;width:46px;height:46px;border-radius:23px;"><img src="/static/common/img/default.png"></div>
+							</div>  
+							<div class="list_content" style="width:360px;line-height:30px;margin-left:44px;height:60px;" :title="item.introduction">{{item.bottom}}</div>
+							<div style="font-size:14px;margin:0 44px 44px 44px;line-height:40px;height:40px;">
+								<div style="float:left;color:#ff2359;" :title="item.label1"><span>{{item.label1}}</span><span style="margin-left:16px;" :title="item.label2">{{item.label2}}</span></div>
+								<div style="float:left;width:50px;height:30px;"></div>
+								<div style="float:right;text-align:center;line-height:30px;color:#9191af;" :title="item.view_num">{{item.view_num}}人浏览</div>
+							</div>
+						</div>
+						</a>
+					</div>
+		    	</div>
+			</div>
+			<div class="page_list"></div>
+			<input type="hidden" id="current" value="1">
+		</div>
+		<div class="container_right">
+			<div class="right_banner">
+				<a href="/home/project/index/id/127"><img src="/static/common/img/banner2.png" width="440"></a>
+			</div>
+			<div class="right_banner">
+				<a href="/home/project/index/id/128"><img src="/static/common/img/banner3.png" width="440"></a>
+			</div>
+			<div class="right_banner">
+				<a href="/home/project/index/id/125"><img src="/static/common/img/banner4.png" width="440"></a>
+			</div>
+		</div>
+	</div>
+	{include file="base/footer_new" /}
+	<script type="text/javascript">
+	$(function(){
+        $(".shaixuan-tj span.crumb-select-item").live('hover',function(event){
+            if(event.type=='mouseenter'){ 
+            $(this).addClass("crumb-select-itemon");
+            }else{ 
+            $(this).removeClass("crumb-select-itemon");
+            } 
+        });
+        $(".shaixuan-tj span.crumb-select-item").live('click', function(event){
+            event.preventDefault();
+            $(this).remove();
+            var TTR   = $(this).find("em").text();
+            	emcss = $(this).find("em").data("css");
+            $(".show-con a").each(function(){
+                var TT 	  = $(this).text();
+                    THI   = $(this);
+                    THIPP = $(this).parents("dl");
+                if(TTR==TT){
+                    THI.removeClass("nzw12");
+                    THIPP.css("display","block");
+                }
+            })
+            
+            if(emcss=="service_title"){
+            	$("#key_sign").val(0);
+            }
+            if(emcss=="industry_title"){
+            	$("#key_industry").val(0);
+            }
+            if(emcss=="size_title"){
+            	$("#key_size").val(0);
+            }
+            if(emcss=="area_title"){
+            	$("#key_area").val(0);
+            }
+            searchKey();
+        });
+        
+        $(".show-con a").click(function(event){
+            event.preventDefault();
+                 THIP = $(this).parents("dl");
+            if($(this).hasClass("nzw12")){
+            }else{
+                $(this).addClass("nzw12");
+                var appid 		= $(this).parents("dd").data("appid");
+                    appcss      = $(this).parents("dd").siblings("dt").attr("class");
+                    dtcss       = $(this).parents("dt").attr("class");
+                    zhiclass 	= $(this).parents("dd").siblings("dt").find("a[id^='href_"+appid+"']").text();
+                    zhicon 		= $(this).text();
+                    dataid 		= $(this).data("id");
+                    
+                THIP.css("display","none");
+                if(appcss=="service_title"){
+                	$("#key_sign").val(dataid);
+                	tianjaneir	= "<span class='crumb-select-item'><a href='/'><b>"+zhiclass+"</b><em data-css='"+appcss+"' data-id="+dataid+">"+zhicon+"</em><i class='icon-remove'></i></a></span>"
+                	$(".shaixuan-tj").children().last().after(tianjaneir);
+                }
+                if(appcss=="industry_title"){
+                	$("#key_industry").val(dataid);
+                	tianjaneir	= "<span class='crumb-select-item'><a href='/'><b>"+zhiclass+"</b><em data-css='"+appcss+"' data-id="+dataid+">"+zhicon+"</em><i class='icon-remove'></i></a></span>"
+                	$(".shaixuan-tj").children().last().after(tianjaneir);
+                }
+                if(dtcss=="size_title"){
+                	$("#key_size").val(dataid);
+                	tianjaneir	= "<span class='crumb-select-item'><a href='/'><b>"+zhiclass+"</b><em data-css='"+dtcss+"' data-id="+dataid+">"+zhicon+"</em><i class='icon-remove'></i></a></span>"
+                	$(".shaixuan-tj").children().last().after(tianjaneir);
+                }
+                if(dtcss=="area_title"){
+                	$("#key_area").val(dataid);
+                	tianjaneir	= "<span class='crumb-select-item'><a href='/'><b>"+zhiclass+"</b><em data-css='"+dtcss+"' data-id="+dataid+">"+zhicon+"</em><i class='icon-remove'></i></a></span>"
+                	$(".shaixuan-tj").children().last().after(tianjaneir);
+                }
+                
+                searchKey();
+            }
+        });
+        
+        $(".show-more").click(function(event){
+            event.preventDefault();
+            var ticon = $(this).find("i");
+                tspan = $(this).find("span");
+                if($(this).hasClass("zk")){
+                    $(this).siblings(".show-con").css("height","30px");
+                    ticon.removeClass("icon-angle-up");
+                    ticon.addClass("icon-angle-down");
+                    tspan.html("更多");
+                    $(this).removeClass("zk")
+                }else{
+                    $(this).siblings(".show-con").css("height","auto");
+                    ticon.removeClass("icon-angle-down");
+                    ticon.addClass("icon-angle-up");
+                    tspan.html("收起");
+                    $(this).addClass("zk")
+                }
+        });
+        
+        $("#sxbtn").click(function(event){
+            event.preventDefault();
+            var xicon = $(this).find("span i");
+                xspan = $(this).find("span em");
+            if($(this).hasClass("zkon")){
+                xspan.text("收起筛选");
+                xicon.removeClass("icon-angle-down");
+                xicon.addClass("icon-angle-up");
+                $(".sxcon").slideDown();
+                $(this).removeClass("zkon");
+        		$("#select_id").css("height","370px");
+            }else{
+                xspan.text("查看筛选");
+                xicon.removeClass("icon-angle-up");
+                xicon.addClass("icon-angle-down");
+                $(".sxcon").slideUp();
+                $(this).addClass("zkon");
+                $("#select_id").css("height","100px");
+            }
+        })
+    })
+    
+	var vue = new Vue({
+	    el: "#box",
+	    data: {
+	        displayCareList: [],
+	        pageCount: "",
+	        total: "",
+	    },
+	    mounted: function() {
+	        this.$nextTick(function() {
+	        	var current   = 1;
+	        	 $.ajax({
+	                    url: '/home/index/listprojectApi',
+	                    type: 'GET',
+	                    async: false,
+	                    dataType: 'json',
+	                    data: { "page": current}
+	                })
+	                .done(function(res) {
+	                    if (res.code == 200) {
+	                        vue.displayCareList = res.data['data'];
+	                        vue.pageCount  		= res.data['page'];
+	                        vue.total 			= res.data['ptotal'];
+	                    }else{
+	                    	vue.displayCareList = [];
+	                        vue.pageCount 	 	= 0;
+	                        vue.total 			= 0;
+	                        $("#searchnone").css('display','block'); 
+	                    }
+	                });
+	        	 
+	        	 $("#keyword").keydown(function(event) {
+		                if (event.which == 13) {
+		                	searchKey();
+		                }
+		            });
+	        	 
+	        	 
+				$('.page_list').pagination({
+	        		pageCount: vue.pageCount,
+	        		current:current,
+	        		callback: function (api) {
+	        			$('.now').text(api.getCurrent());
+	        		}
+	        	}, function (api) {
+	        		$('.now').text(api.getCurrent());
+	        	});
+				
+				var str_w = vue.pageCount*60+60;
+				$('.page_list').css({"width":str_w+"px"});
+			});
+	    },
+	    methods: {
+	    	
+	    }
+	});  
+	
+	function orderclick(current){
+		var keyword      = $("#keyword").val();
+		var key_sign 	 = $("#key_sign").val();
+		var key_industry = $("#key_industry").val();
+		var key_size 	 = $("#key_size").val();
+		var key_area 	 = $("#key_area").val();
+		$("#current").val(current);
+		$.ajax({
+            url: '/home/index/listprojectApi',
+            type: 'GET',
+            async: false,
+            dataType: 'json',
+            data: { "page": current,"keyword":keyword,"key_sign":key_sign,"key_industry":key_industry,"key_size":key_size,"key_area":key_area}
+        })
+        .done(function(res) {
+            if (res.code == 200) {
+                vue.displayCareList = res.data['data'];
+                vue.pageCount  		= res.data['page'];
+                vue.total 			= res.data['total'];
+                if(vue.total==1){
+                	$('.page_list').css('display','none'); 
+                }
+                $("#searchnone").css('display','none'); 
+            }else{
+            	vue.displayCareList = [];
+                vue.pageCount 	 	= 0;
+                vue.total 			= 0;
+                $("#searchnone").css('display','block'); 
+            }
+            $('.page_list').pagination({
+        		pageCount: vue.pageCount,
+        		current:current,
+        		callback: function (api) {
+        			$('.now').text(api.getCurrent());
+        		}
+        	}, function (api) {
+        		$('.now').text(api.getCurrent());
+        	});
+            
+            var str_w = vue.pageCount*60+60;
+			$('.page_list').css({"width":str_w+"px"});
+        });
+	}
+	
+	function searchKey(){
+		var current      = $("#current").val();
+		var keyword 	 = $("#keyword").val();
+		var key_sign 	 = $("#key_sign").val();
+		var key_industry = $("#key_industry").val();
+		var key_size 	 = $("#key_size").val();
+		var key_area 	 = $("#key_area").val();
+		$.ajax({
+            url: '/home/index/listprojectApi',
+            type: 'GET',
+            async: false,
+            dataType: 'json',
+            data: { "page": current,"keyword":keyword,"key_sign":key_sign,"key_industry":key_industry,"key_size":key_size,"key_area":key_area}
+        })
+        .done(function(res) {
+            if (res.code == 200) {
+                vue.displayCareList = res.data['data'];
+                vue.pageCount  		= res.data['page'];
+                vue.total 			= res.data['total'];
+                if(res.data['ptotal']==1){
+                	$('.page_list').css('display','none'); 
+                }
+                $("#searchnone").css('display','none'); 
+            }else{
+            	vue.displayCareList = [];
+                vue.pageCount 	 	= 0;
+                vue.total 			= 0;
+                $("#searchnone").css('display','block'); 
+            }
+            
+            $('.page_list').pagination({
+        		pageCount: vue.pageCount,
+        		current:current,
+        		callback: function (api) {
+        			$('.now').text(api.getCurrent());
+        		}
+        	}, function (api) {
+        		$('.now').text(api.getCurrent());
+        	});
+            
+            var str_w = vue.pageCount*60+60;
+			$('.page_list').css({"width":str_w+"px"});
+        });
+	}
+	
+	function show_s(id){
+		$('.service_title a').each(function(){
+			var dataid = $(this).attr('data-id');
+            if(dataid==id){
+            	if($("#sicon_"+id).hasClass("icon-angle-down")){
+        			$("#service_"+id).css('display','block'); 
+        			$("#sicon_"+id).removeClass("icon-angle-down");
+        			$("#sicon_"+id).addClass("icon-angle-up")
+        			$("#href_"+id).css('color','#2e77f5'); 
+        		}else{
+        			$("#service_"+id).css('display','none'); 
+        			$("#href_"+id).css('color',''); 
+        			$("#sicon_"+id).removeClass("icon-angle-up");
+        			$("#sicon_"+id).addClass("icon-angle-down")
+        			
+        		}
+            }else{
+            	$("#service_"+dataid).css('display','none'); 
+            	
+            	if($("#sicon_"+dataid).hasClass("icon-angle-up")){
+            		$("#sicon_"+dataid).removeClass("icon-angle-up");
+        			$("#sicon_"+dataid).addClass("icon-angle-down")
+        			$("#href_"+dataid).css('color',''); 
+            	}
+            }
+        })
+	}
+	
+    function show_in(id){
+    	$('.industry_title a').each(function(){
+    		var dataid = $(this).attr('data-id');
+    		if(dataid==id){
+    			if($("#in_icon_"+id).hasClass("icon-angle-down")){
+    				$("#href_"+id).css('color','#2e77f5'); 
+        			$("#industry_"+id).css('display','block'); 
+        			$("#in_icon_"+id).removeClass("icon-angle-down");
+        			$("#in_icon_"+id).addClass("icon-angle-up")
+        		}else{
+        			$("#industry_"+id).css('display','none'); 
+        			$("#href_"+id).css('color',''); 
+        			$("#in_icon_"+id).removeClass("icon-angle-up");
+        			$("#in_icon_"+id).addClass("icon-angle-down")
+        		}
+    		}else{
+    			$("#industry_"+dataid).css('display','none'); 
+            	if($("#in_icon_"+dataid).hasClass("icon-angle-up")){
+            		$("#in_icon_"+dataid).removeClass("icon-angle-up");
+        			$("#in_icon_"+dataid).addClass("icon-angle-down")
+        			$("#href_"+dataid).css('color',''); 
+            	}
+    		}
+		})
+	}
+
+	</script>
+	</body>
+</html>
