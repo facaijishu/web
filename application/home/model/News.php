@@ -12,7 +12,7 @@ class News extends Model
         
         $result['news_date'] = substr($result['create_time'],0,10);
         
-        $other = $this->field("id,title")->where('id <> '.$result['id'].' and type in ('.$result['type'].')')->select();
+        $other = $this->field("id,title")->where('id <> '.$result['id'].' and type in ('.$result['type'].')')->limit(5)->select();
         $result['other_list'] = $other;
         
         if($type==1){

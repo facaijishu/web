@@ -12,12 +12,12 @@
 			</ul>
 		</div>
 	</div>
-	<div id="detail" class="container">
+	<div id="detail" class="container" style="height:2200px;">
 		<div class="detail_menu">
 			<a href="/" title="首页">首页</a> &nbsp;>&nbsp;
 			<a href="/home/industry_report/lists" title="资讯中心">研报中心</a>
 		</div>
-		<div class="detail_content" style="float:left;width:890px;height:100%;">
+		<div class="detail_content" style="float:left;width:890px;height:94%;">
 			<div style="height:100%;width:55px;float:left;"></div>
 			<div class="detail_title" style="" title="{$info.title}"> {$info.title}
 				<div style="float:right;text-align:center;" >
@@ -40,9 +40,10 @@
 	        </div>
 	        <div class="detail_memo" style="float;right;width:55px;"></div>
 	        <div class="detail_memo" style="height:30px;border-bottom:solid 1px #d8d8d8;"></div>
-			<div class="detail_body">
+			<div class="detail_body_report" style="height:1500px;">
 				{$info.content_pc}
-				<br/>
+			</div>
+			<div class="detail_memo" style="margin-top:5px;color:#9191af;">
 				AD：FA財致力于企业服务，坚持以高效、精准、专业、优质为服务理念，为用户提供股权、债权、税务筹划、企业咨询、活动培训、金融服务包、赋能服务（技术支持、供应链、会计事务所、律师事务所等）等多项服务，为用户提供管家式服务，专业化服务团队和技术平台确保质量的稳定服务。详情咨询微信：jrfacaige
 			</div>
 			<div class="detail_footer">声明：本文来源网络，若有涉及侵权，请联系我们删除</div>
@@ -105,10 +106,10 @@
 	</div>
 	{include file="base/footer_new" /}
 	<script type="text/javascript">
-		var h 	  = $(".detail_body").height();
-		var str_h = h + 530;
+		//var h 	  = $(".detail_body").height();
+		//var str_h = h + 530;
 		//$("#detail_body").css({"height":h+"px"});  
-		$("#detail").css({"height":str_h+"px"});  
+		//$("#detail").css({"height":str_h+"px"});  
 	</script>
 	
 	<script type="text/javascript">

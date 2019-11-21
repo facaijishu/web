@@ -168,26 +168,26 @@
 	<div class="container" style="height:360px;">
 		<div class="service_box">
 			<div class="service_heard_01" id="heard_01"></div>
-			<div class="service_title" id="title_01">技术服务</div>
+			<div class="service_title_index" id="title_01">技术服务</div>
 			<div class="service_memo" id="memo_01">技术团队、专利转让、技术升级</div>
 		</div>
 		<div style="float:left;width:48px;height:356px;"></div>
 		<div class="service_box">
 			<div class="service_heard_02" id="heard_02"></div>
-			<div class="service_title" id="title_02">经营服务</div>
+			<div class="service_title_index" id="title_02">经营服务</div>
 			<div class="service_memo" id="memo_02">销售服务、订单服务、供应链管理</div>
 		</div>
 		<div style="float:left;width:48px;height:356px;"></div>
 		<div class="service_box">
 			<div class="service_heard_03" id="heard_03"></div>
-			<div class="service_title" id="title_03">企业服务</div>
+			<div class="service_title_index" id="title_03">企业服务</div>
 			<div class="service_memo" id="memo_03">税务筹划、招商落户、高新认定</div>
 			<div class="service_memo_more" id="more_03">政府补贴、法务、培训、活动</div>
 		</div>
 		<div style="float:left;width:48px;height:356px;"></div>
 		<div class="service_box">
 			<div class="service_heard_04" id="heard_04"></div>
-			<div class="service_title" id="title_04">资本服务</div>
+			<div class="service_title_index" id="title_04">资本服务</div>
 			<div class="service_memo" id="memo_04">上市服务、券商、会所</div>
 			<div class="service_memo_more" id="more_04">律所、投资服务</div>
 		</div>
@@ -364,7 +364,7 @@
 		}
 		
 		function viewNews(){
-			window.location.href = '/home/consultation/lists';
+			window.location.href = '/home/news/lists';
 		}
 		
 		function viewReport(){
@@ -378,63 +378,7 @@
 			}
 		}
 		
-	    window.onload = function () {
-	        var container 	= document.getElementsByClassName('container_box').item(0);
-	        var list 		= document.getElementsByClassName('list').item(0);
-	        var index 		= 1;
-	        var animated 	= false;
-	        var timer;
-	
-	        function animate(offset) {
-	            animated 		= true;
-	            var newL 		= parseInt(list.style.left) + offset;
-	            var time 		= 400;
-	            var interval 	= 10;
-	            var speed = offset / (time / interval);
-	            function go() {
-	                if ((speed < 0 && parseInt(list.style.left) > newL) || (speed > 0 && parseInt(list.style.left) < newL)) {
-	                    list.style.left = parseInt(list.style.left) + speed + 'px';
-	                    setTimeout(go, interval);
-	                } else {
-	                    animated = false;
-	                    list.style.left 	= newL + 'px';
-	                    var w    = $(".container").width();
-	                        minw = w-200;
-	                    if (newL < -minw) {
-	                        list.style.left = -100 + 'px';
-	                    } else if (newL > -100) {
-	                        list.style.left = -minw + 'px';
-	                    }
-	                }
-	            }
-	
-	            go();
-	        }
-	
-	        function play() {
-	            timer = setInterval(function () {
-	                next.onclick();
-	            }, 300);
-	        }
-	
-	        function stop() {
-	            clearInterval(timer);
-	        }
-	
-	        next.onclick = function () {
-	            if (index == 3) {
-	                index = 1;
-	            } else {
-	                index += 1;
-	            }
-	            if (animated == false) {
-	                animate(-100);
-	            }
-	        }
-	        container.onmouseover = stop;
-	        container.onmouseout  = play;
-	        play();
-	    }
+
 	</script>
 	</body>
 </html>

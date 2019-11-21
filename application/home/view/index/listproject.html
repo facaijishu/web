@@ -326,6 +326,7 @@
         .done(function(res) {
             if (res.code == 200) {
                 vue.displayCareList = res.data['data'];
+                console.log(vue.displayCareList);
                 vue.pageCount  		= res.data['page'];
                 vue.total 			= res.data['total'];
                 if(vue.total==1){
@@ -370,6 +371,7 @@
         .done(function(res) {
             if (res.code == 200) {
                 vue.displayCareList = res.data['data'];
+                console.log(vue.displayCareList);
                 vue.pageCount  		= res.data['page'];
                 vue.total 			= res.data['total'];
                 if(res.data['ptotal']==1){
