@@ -1,65 +1,41 @@
-{include file="base/header" /}
-<div class="do-section fp-auto-height do-banner" data-fullname="BANNER">
-    <div class="do-area" id="banner_257782_0">
-        <div class="do-area-bg ">
-            <div class="do-area-bg-conter" style="background-image: url('http://file.cdn-static.cn/2734_w2000.jpg?imageMogr2/thumbnail/2000x2000/q/100');background-attachment:fixed">
-                <div class="bgcolor"></div>
-            </div>
-        </div>
-        <div id="banner_0" class="do-row do-row-one ">
-            <div class="do-row ">
-                <div class="do-col-12 do-B-c-13-14" id='B-c-13-14'>
-                    <div class="do-panelcol">
-                        <div class="do-block do-space do-k8z9l">
-                            <div class="do-element-space pc" style="padding-top:8.333333333333332%;"></div>
-                            <div class="do-element-space phone" style="padding-top:15.337423312883436%;"></div>
-                        </div>
-                        <div class="do-block do-text do-k8z9k">
-                            <div class="do-text-ah1du">
-                                <div class="do-element-text do-element-general">
-                                    <div class="do-element-text-content do-html">
-                                        <div class="do-html-content">
-                                            <p><span style="color: rgb(255, 255, 255); font-size: 30px; font-family: SimHei;">资讯中心</span><span style="font-family: Arial, Helvetica, sans-serif; font-size: 20px; color: rgb(255, 255, 255);">/news</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="do-block do-space do-k8z9j">
-                            <div class="do-element-space pc" style="padding-top:8.333333333333332%;"></div>
-                            <div class="do-element-space phone" style="padding-top:15.337423312883436%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="do-body-content do-body do-area">
-    <div class="do-row-one do-row">
-        <div class="do-col-10">
-            <div class="do-article">
-                <div class="do-element-crumb" style="margin-bottom: 20px;">
-                    <ol class="breadcrumb">
-                        <li><a href='{:url("Index/index")}'>首页</a></li>
-                        <li><a href='{:url("Consultation/list")}'>资讯中心</a></li>
-                    </ol>
-                </div>
-                <div class="do-article-title">
-                    <h1 style="text-align: center;">{$info.title}</h1>
-                    <div class="do-bar clearfix">
-                        <div class="do-time inline" style="margin-right: 20px;">
-                            <span>发布时间：</span>
-                            {$info.release_date}						
-                        </div>
-                    </div>
-                </div>
-                <div class="do-article-content clearfix">
-                    {$info.content}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--<script src="qrcode.js" tppabs="http://bk.st.styleweb.com.cn/editor/js/qrcode.js"></script>-->
-{include file="base/footer" /}
+{include file="base/header_new" /}
+	<div class="container" style="height:120px;">
+		<div class="index_header" style="margin-left:0px;">
+		<div style="float:left;margin-top:40px;width:500px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+			<ul>
+				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
+				<li><a href="javascript:;" title="研报中心">发研报中心</a></li>
+				<li><a href="javascript:;" title="资讯中心">资讯中心</a></li>
+				<li><a style="font-size:22px;color:#222222;"  href="javascript:;" title="找资金">找资金</a></li>
+				<li><a href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
+				<li><a href="/" title="首页">首页</a></li>
+			
+			</ul>
+		</div>
+	</div>
+	<div id="detail" class="container">
+		<div class="detail_menu">
+			<a href="/" title="首页">首页</a> &nbsp;>&nbsp;
+			<a href="/home/consultation/lists" title="资讯中心">资讯中心</a>
+		</div>
+		<div class="detail_content">
+			<div style="height:100%;width:74px;float:left;"></div>
+			<div class="detail_title"  title="{$info.title}"> {$info.title}</div>
+			<div class="detail_memo">
+	          	 发布时间：<span>{$info.release_date}</span>					
+	        </div>
+			<div class="detail_body">
+				{$info.content}<br/>
+			</div>
+		</div>
+	</div>
+	<div class="container" style="height:200px;"></div>
+	{include file="base/footer_new" /}
+	<script type="text/javascript">
+		var h 	  = $(".detail_body").height();
+		var str_h = h + 200;
+		//$("#detail_body").css({"height":h+"px"});  
+		$("#detail").css({"height":str_h+"px"});  
+	</script>
+	</body>
+</html>

@@ -1,119 +1,94 @@
-{include file="base/header" /}
-<div class="do-section fp-auto-height do-banner" data-fullname="BANNER">
-    <div class="do-area" id="banner_257782_0">
-        <div class="do-area-bg ">
-            <div class="do-area-bg-conter" style="background-image: url('http://file.cdn-static.cn/2734_w2000.jpg?imageMogr2/thumbnail/2000x2000/q/100');background-attachment:fixed">
-                <div class="bgcolor"></div>
-            </div>
-        </div>
-        <div id="banner_0" class="do-row do-row-one ">
-            <div class="do-row ">
-                <div class="do-col-12 do-B-c-13-14" id='B-c-13-14'>
-                    <div class="do-panelcol">
-                        <div class="do-block do-space do-k8z9l">
-                            <div class="do-element-space pc" style="padding-top:8.333333333333332%;"></div>
-                            <div class="do-element-space phone" style="padding-top:15.337423312883436%;"></div>
-                        </div>
-                        <div class="do-block do-text do-k8z9k">
-                            <div class="do-text-ah1du">
-                                <div class="do-element-text do-element-general">
-                                    <div class="do-element-text-content do-html">
-                                        <div class="do-html-content">
-                                            <p><span style="color: rgb(255, 255, 255); font-size: 30px; font-family: SimHei;">资讯中心</span><span style="font-family: Arial, Helvetica, sans-serif; font-size: 20px; color: rgb(255, 255, 255);">/news</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="do-block do-space do-k8z9j">
-                            <div class="do-element-space pc" style="padding-top:8.333333333333332%;"></div>
-                            <div class="do-element-space phone" style="padding-top:15.337423312883436%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="do-body">
-    <div class="do-section area-ly-btn3 do-area" id="area_257782_0" data-fullname="">
-        <div class="do-area-bg ">
-            <div class="do-area-bg-conter">
-                <div class="bgcolor"></div>
-            </div>
-        </div>
-        <div id="area_0" class="do-row do-row-one ly-btn3">
-            <div class="do-row ly-btn3">
-                <div class="do-col-12 do-D-c-38-39" id="D-c-38-39">
-                    <div class="do-panelcol">
-                        <div class="do-block do-space do-k8zvx">
-                            <div class="do-element-space pc" style="padding-top:6.666666666666667%;"></div>
-                            <div class="do-element-space phone" style="padding-top:16.400000000000002%;"></div>
-                        </div>
-                        <div class="do-block do-text do-k8zvw">
-                            <div class="do-text-8ti2a">
-                                <div class="do-element-text do-element-general">
-                                    <div class="do-element-text-content do-html">
-                                        <div class="do-html-content">
-                                            <p style="line-height: 1.2;"><span style="font-size: 24px; font-family: SimHei; color: rgb(85, 85, 85);">资讯中心</span></p>
-                                            <p style="line-height: 1.2;"><span style="font-size: 14px; font-family: Arial, Helvetica, sans-serif; color: rgb(153, 153, 153);">Information Center</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="do-block do-space do-k8zvv">
-                            <div class="do-element-space pc" style="padding-top:3.3333333333333335%;"></div>
-                            <div class="do-element-space phone" style="padding-top:5%;"></div>
-                        </div>
-                        <div class="do-block do-list do-k8zvu">
-                            <div class="do-element-media x do-time-open num1 phoneRows2 ly-news-right">
-                                <div class="do-element-media-content md" id="swiper_k8zvu" data-rows="1" data-phonerows="2" data-initialslide="0" data-slidespercolumn="1">
-                                    <ul class="do-element-media-ul x do-content-list ">
-                                        {foreach name="list" item="it"}
-                                        <li class="do-element-media-li " data-wow-delay=".0s">
-                                            <a href='{:url("Consultation/index",["id" => $it.con_id])}' target="_blank">
-                                                <div class="do-element-media-conter clearfix do-caption">
-                                                    <div class="do-media-image-box o-mask" style="float:left;">
-                                                        <div class="do-media-image" style="padding-top:57.14285714285714%;">
-                                                            <div class="do-media-image-conter do-img-cover">
-                                                                <img style="width:100%;" class="scrollLoading" alt="{$it.title}" src="{$it.top_img_url}">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="do-title do-html-content">
-                                                        <div class="do-title-body">
-                                                            <div class="do-title-content do-html-content">
-                                                                <div class="do-html-content title js-toclamp" data-clampnum="1">{$it.title}</div>
-                                                                <div class="do-html-content des">
-                                                                    <p class="js-toclamp" data-clampnum="2">{$it.des}</p>
-                                                                    <p class="do-time"><span>发布时间：</span>{$it.release_date}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        {/foreach}
-                                    </ul>
-                                </div>
-                            </div>
-                            <style>.do-k8zvu .do-middle-center img { width:35%; }</style>
-                        </div>
-                        <div class="do-block do-space do-k8zvs">
-                            <div class="do-element-space pc" style="padding-top:3.3333333333333335%;"></div>
-                            <div class="do-element-space phone" style="padding-top:5%;"></div>
-                        </div>
-                        <div class="do-block do-space do-k8zvp">
-                            <div class="do-element-space pc" style="padding-top:6.666666666666667%;"></div>
-                            <div class="do-element-space phone" style="padding-top:17.1%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--<script src="qrcode.js" tppabs="http://bk.st.styleweb.com.cn/editor/js/qrcode.js"></script>-->
-{include file="base/footer" /}
+{include file="base/header_new" /}
+	<div class="container" style="height:120px;">
+		<div class="index_header" style="margin-left:0px;">
+		<div style="float:left;margin-top:40px;width:500px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+			<ul>
+				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
+				<li><a href="javascript:;" title="研报中心">研报中心</a></li>
+				<li><a href="javascript:;" title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Index/listproject")}' title="找资金">找资金</a></li>
+				<li><a href='{:url("Index/listorganize")}' title="找项目">找项目</a></li>
+				<li><a href="/" title="首页">首页</a></li>
+			
+			</ul>
+		</div>
+	</div>
+	<div id="box" class="container" >
+	    <div style="height:50px;"></div>
+		<div class="hot_news"  v-for="item in displayCareList">
+			<a :href="item.item_url" target="_blank" :title="item.des"> 
+			<div class="hot_news_content">
+				<div class="hot_news_bg" :style="item.style_bg_url"></div>
+				<div style="float:left;width:62%;height:190px;">
+				 	<div style="height:30px;"></div>  
+					<div class="list_title" :title="item.title">{{item.title}}</div>  
+					<div class="list_content" style="line-height:50px;" :title="item.des">{{item.short_des}}<span class="list_more" style="float:right;" title="详情">详情</span></div>
+					<div style="font-size:14px;height:40px;">
+						<div class="list_sort" style="float:left;" :title="item.sort_name">{{item.sort_name}}</div>
+						<div style="float:left;width:50px;height:30px;"></div>
+						<div style="float:left;text-align:center;line-height:30px;color:#9191af;" title="FA財">FA財</div>
+						<div style="float:right;text-align:center;line-height:30px;color:#9191af;" :title="item.release_date">{{item.release_date}}</div>
+					</div>
+				</div>
+			</div>
+			</a>
+		</div>
+	</div>
+	<div class="container" style="height:100px;">
+		<div class="page_list" style="width:520px;"></div>
+		<input type="hidden" id="current" value="1">
+	</div>
+	{include file="base/footer_new" /}
+	
+		<script type="text/javascript">
+		var vue = new Vue({
+		    el: "#box",
+		    data: {
+		        displayCareList: [],
+		        pageCount: "",
+		        total: "",
+		    },
+		    mounted: function() {
+		        this.$nextTick(function() {
+		        	var current   = 1;
+		        	 $.ajax({
+		                    url: '/home/consultation/listApi',
+		                    type: 'GET',
+		                    async: false,
+		                    dataType: 'json',
+		                    data: { "page": current}
+		                })
+		                .done(function(res) {
+		                    if (res.code == 200) {
+		                        vue.displayCareList = res.data['data'];
+		                        console.log(vue.displayCareList);
+		                        vue.pageCount  		= res.data['page'];
+		                        vue.total 			= res.data['ptotal'];
+		                    }else{
+		                    	vue.displayCareList = [];
+		                        vue.pageCount 	 	= 0;
+		                        vue.total 			= 0;
+		                        $("#searchnone").css('display','block'); 
+		                    }
+		                });
+		        	 
+		        	 
+					$('.page_list').pagination({
+		        		pageCount: vue.pageCount,
+		        		current:current,
+		        		callback: function (api) {
+		        			$('.now').text(api.getCurrent());
+		        		}
+		        	}, function (api) {
+		        		$('.now').text(api.getCurrent());
+		        	});
+				});
+		    },
+		    methods: {
+		    	
+		    }
+		});  
+		</script>
+	</body>
+</html>
+	

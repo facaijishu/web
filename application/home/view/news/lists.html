@@ -1,7 +1,7 @@
 {include file="base/header_new" /}
 	<div class="container" style="height:120px;">
 		<div class="index_header" style="margin-left:0px;">
-		<div style="float:left;margin-top:40px;width:500px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+		<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
 			<ul>
 				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
 				<li><a href='{:url("IndustryReport/lists")}'  title="研报中心">研报中心</a></li>
@@ -18,29 +18,32 @@
 			<a href="/" title="首页">首页</a> &nbsp;>&nbsp;
 			<a href="javascript:;" title="资讯中心">资讯中心</a>
 		</div>
-		<div style="float:left;width:890px;height:1000px;">
-			<div v-for="item in displayCareList" >
+		<div class="container_left" style="height:1000px;">
+			<div v-for="item in displayCareList">
 				<div class="hot_news">
 					<a href="javascript:;" target="_blank" title="">
-					<div class="hot_news_content">
-						<div style="width:100%;height:38px;" @click="openView(item.item_url)"></div>
-						<div style="float:left;width:49px;height:190px;"  @click="openView(item.item_url)"></div>
-						<div class="list_sort_industry"  style="float:left;line-height:30px;width:68px;font-size:14px;margin-bottom:30px;">热门资讯</div> 
-						<div class="list_title" style="width:764px;margin-left:78px;margin-bottom:30px;" :title="item.title"  @click="openView(item.item_url)">&nbsp;&nbsp;{{item.title}}&nbsp;&nbsp;
-							<div  v-if="item.is_hot ==1" style="float:right;text-align:center;line-height:30px;color:#9191af;" >
-	                            <img src="/static/common/img/hot_icon.png" width="22" height="28">
+						<div class="hot_news_content">
+							<div style="width:100%;height:38px;" @click="openView(item.item_url)"></div>
+							<div style="float:left;width:49px;height:190px;"  @click="openView(item.item_url)"></div>
+							<div style="float:left;width:90%;height:190px;">
+								<div class="list_sort_industry"  style="float:left;line-height:30px;width:68px;font-size:14px;margin-bottom:30px;">热门资讯</div> 
+								<div class="list_title" style="margin-left:78px;margin-bottom:30px;" :title="item.title"  @click="openView(item.item_url)">&nbsp;&nbsp;{{item.title}}&nbsp;&nbsp;
+									<div  v-if="item.is_hot ==1" style="float:right;text-align:center;line-height:30px;color:#9191af;" >
+			                            <img src="/static/common/img/hot_icon.png" width="22" height="28">
+									</div>
+								</div>
+								<div class="list_content" style="float:left;width:100%;font-size:14px;" @click="openView(item.item_url)">
+									<div style="float:left;line-height:23px;text-align:left;">关键词</div>
+										<div class="list_industry" v-for="dt in item.dict_list"  style="margin-left:15px;" title="dfdf">&nbsp;&nbsp;{{dt.dict_name}}&nbsp;&nbsp;</div>
+								</div>
+								<div class="list_content" style="font-size:14px;">关联项目
+									<span class="list_service" style="margin-left:15px;" title="item.related_titl" @click="openView(item.related_url)">&nbsp;&nbsp;{{item.related_title}}&nbsp;&nbsp;</span>
+									<div class="icon-time"  style="float:right;font-size:18px;text-align:right;line-height:30px;width:500px;color:#9191af;"  @click="openView(item.item_url)">
+										<span style="font-size:14px;">&nbsp;{{item.news_date}}</span>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="list_content" style="float:left;width:840px;"  @click="openView(item.item_url)">
-							<div style="float:left;line-height:23px;">关键词</div>
-								<div class="list_industry" v-for="dt in item.dict_list"  style="margin-left:15px;" title="dfdf">&nbsp;&nbsp;{{dt.dict_name}}&nbsp;&nbsp;</div>
-						</div>
-						<div class="list_content" style="font-size:14px;width:840px;">关联项目<span class="list_service" style="margin-left:15px;" title="item.related_titl" @click="openView(item.related_url)">&nbsp;&nbsp;{{item.related_title}}&nbsp;&nbsp;</span>
-							<div class="icon-time" style="float:right;font-size:18px;text-align:center;line-height:30px;color:#9191af;" @click="openView(item.item_url)">
-								<span style="font-size:14px;">&nbsp;{{item.news_date}}</span>
-							</div>
-						</div>
-					</div>
 					</a>
 				</div>
 				
@@ -51,7 +54,7 @@
 			</div>
 		<div style="float:right;width:500px;height:1000px;">
 			{foreach name="$show['pro-data']['data']" item="pro"}
-				<div class="right_card">
+				<div class="right_card" style="border:solid 1px #fff;">
 					<a href='{:url("Project/index",["id" => $pro.id])}' target="_blank" title="{$pro.name}">
 						<div class="right_card_content">
 							<div style=";width:450px;">
@@ -100,13 +103,13 @@
 				<div style="float:right;width:450px;height:30px;"></div>
 			{/foreach}
 			<div style="float:right;width:450px;height:20px;"></div>
-			<div class="right_banner">
+			<div class="right_banner_index">
 				<a href="/home/project/index/id/127"><img src="/static/common/img/banner2.png" width="440"></a>
 			</div>
-			<div class="right_banner">
+			<div class="right_banner_index">
 				<a href="/home/project/index/id/128"><img src="/static/common/img/banner3.png" width="440"></a>
 			</div>
-			<div class="right_banner">
+			<div class="right_banner_index">
 				<a href="/home/project/index/id/125"><img src="/static/common/img/banner4.png" width="440"></a>
 			</div>
 		</div>

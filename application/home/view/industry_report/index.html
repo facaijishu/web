@@ -1,7 +1,7 @@
 {include file="base/header_new" /}
 	<div class="container" style="height:120px;">
 		<div class="index_header" style="margin-left:0px;">
-		<div style="float:left;margin-top:40px;width:500px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+		<div style="float:left;margin-top:40px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
 			<ul>
 				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
 				<li><a style="font-size:22px;color:#222222;" href="javascript:;"  title="研报中心">研报中心</a></li>
@@ -17,9 +17,9 @@
 			<a href="/" title="首页">首页</a> &nbsp;>&nbsp;
 			<a href="/home/industry_report/lists" title="资讯中心">研报中心</a>
 		</div>
-		<div class="detail_content" style="float:left;width:890px;height:94%;">
-			<div style="height:100%;width:55px;float:left;"></div>
-			<div class="detail_title" style="" title="{$info.title}"> {$info.title}
+		<div class="detail_content">
+			<div class="detail_left"></div>
+			<div class="detail_title" title="{$info.title}"> {$info.title}
 				<div style="float:right;text-align:center;" >
 				{if condition="$info.is_hot eq 0"}
                 <img src="/static/common/img/hot_icon.png" width="22" height="28">

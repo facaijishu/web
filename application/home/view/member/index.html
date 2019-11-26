@@ -22,39 +22,39 @@
 	</div>
 	<div class="container" style="height:662px;">
 	    <div class="member_box">
-	    	<div style="width:106px;margin:61px 0 0 165px;">
+	    	<div class="member_img">
 	    		<div style="width:106px;height:106px;border-radius:53px;background: url('{$info.userPhoto}') center center no-repeat;"></div>
 	    	</div>
 	    	<div style="text-align:center;">
-	    		<div style="margin:30px 0 22px 0;color:#565682;font-size:22px;font-weight:bold;">{$info.userName}</div>
-	    		<div style="color:#9191af;font-size:14px;">{$info.company}&nbsp;|&nbsp;{$info.position}</div>
-	    		<div style="margin:10px 0 109px 0;color:#9191af;font-size:14px;">{$info.userPhone}</div>
-	    		<div style="margin:0 54px 0 54px;height:70px;">
-	    			<div style="float:left;text-align:center;margin-right:32px;width:56px;height:70px;font-size:14px;color:#9191af;">
+	    		<div class="member_name">{$info.userName}</div>
+	    		<div class="member_memo">{$info.company}&nbsp;|&nbsp;{$info.position}</div>
+	    		<div class="member_phone">{$info.userPhone}</div>
+	    		<div class="member_button_bg" style="height:70px;">
+	    			<div class="member_div">
 		    			<div style="font-size:30px;font-weight:bold;line-height:0px;margin:0 0 32px 0;">666</div>
 		    			<div>我的关注</div>
 	    			</div>
-	    			<div style="float:left;width:56px;margin-right:32px;height:70px;font-size:14px;color:#9191af;">
+	    			<div class="member_div">
 			    		<div style="font-size:30px;font-weight:bold;line-height:0px;margin:0 0 32px 0;">666</div>
 			    		<div>我的粉丝</div>
 		    			</div>
-	    			<div style="float:left;width:56px;margin-right:32px;height:70px;font-size:14px;color:#9191af;">
+	    			<div class="member_div">
 		    			<div style="font-size:30px;font-weight:bold;line-height:0px;margin:0 0 32px 0;">666</div>
 		    			<div>我的人脉</div>
 	    			</div>
-	    			<div style="float:left;width:56px;height:70px;font-size:14px;color:#9191af;">
+	    			<div class="member_div">
 		    			<div style="font-size:30px;font-weight:bold;line-height:0px;margin:0 0 32px 0;">666</div>
 		    			<div>我的收藏</div>
 	    			</div>
 	    		</div>
-	    		<div style="margin:0 54px 0 54px;height:60px;">
-	    			<div style="margin:40px 0 0 0;line-height:0;border-radius:30px;width:328px;height:60px;line-height:60px;font-size:18px;background:#e5efff;color:#2e77f5;">
+	    		<div class="member_button_bg">
+	    			<div class="member_button">
 	    			编辑个人资料
 	    			</div>
 	    		</div>
 	    	</div>
 	    </div>
-		<div class="member_header" >
+		<div class="member_header">
 			<ul>
 				<li><a href="javascript:;"title="关于我们">关于我们</a></li>
 				<li><a href="javascript:;" title="关于我们">|</a></li>
@@ -72,7 +72,6 @@
 			</ul>
 			<div style="height:176px;text-align:center;line-height:0;margin-top:300px;color:#c3c3d8;">
 				<img src="/static/common/img/waiting.png">
-				
 			</div>
 			<div style="font-size:16px;text-align:center;line-height:50px;color:#c3c3d8;">功能开发中，敬请期待！</div>
 		</div>
