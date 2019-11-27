@@ -12,7 +12,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="container" style="background: url(/static/common/img/index_bg.png) center no-repeat;height:575px;position:relative;">
+	<div class="container index_bg">
 		<div class="index_search">
 			<div class="index_search_left">
 				<div style="margin:0 32px 0 32px;"><img src="/static/common/img/search_icon.png"></div>
@@ -25,7 +25,7 @@
 	</div>
 	<div class="container" style="height:1200px;">
 	<div class="hot_header"><span title="精选推荐">精选推荐</span></div>
-		<div style="float:left;width:890px;height:1000px;">
+		<div class="container_left" style="height:1000px;">
 			{foreach name="$list_news" item="it"}
 			<div class="hot_news">                                                                                                                                                                                                                                                          
 				<a href="javascript:;" title="{$it.des}">
@@ -33,7 +33,7 @@
 					<div style="width:100%;height:38px;" onclick="openView('/home/news/index/id/{$it.id}')"></div>
 					<div style="float:left;width:49px;height:190px;" onclick="openView('/home/news/index/id/{$it.id}')"></div>
 					<div style="float:left;width:90%;height:190px;">
-					 	<div class="list_sort_industry" onclick="openView('/home/news/index/id/{$it.id}')" style="float:left;line-height:30px;width:68px;font-size:14px;margin-bottom:30px;">热门资讯</div> 
+					 	<div class="list_sort_industry" style="float:left;line-height:30px;width:68px;font-size:14px;margin-bottom:30px;" onclick="openView('/home/news/index/id/{$it.id}')" >热门资讯</div> 
 						<div class="list_title" style="margin-left:78px;margin-bottom:30px;" title="{$it.title}" onclick="openView('/home/news/index/id/{$it.id}')">{$it.title}
 							<div style="float:right;text-align:center;line-height:30px;color:#9191af;" >
 								{if condition="$it.is_hot eq 1"}
@@ -59,7 +59,7 @@
 			</div>
 			<div style="height:37px;"></div>
 			{/foreach}
-			<div style="background:#f0f0f9;width:800px;margin-left:45px;height:20px;text-align:center;line-height:8px;font-size:14px;color:#9191af;cursor:pointer" onclick="viewNews()">查看更多资讯</div>
+			<div class="index_more" onclick="viewNews()">查看更多资讯</div>
 			<div style="height:37px;"></div>
 			{foreach name="$list_report" item="it"}
 			<div class="hot_news">
@@ -84,7 +84,7 @@
 						</div>
 						<div class="list_content" style="font-size:14px;">关联项目<span class="list_service" style="margin-left:15px;" title="{$it.related_title}">&nbsp;&nbsp;{$it.related_title}&nbsp;&nbsp;</span>
 							<div class="icon-time" style="float:right;font-size:18px;text-align:center;line-height:30px;color:#9191af;" title="{$it.report_date}">
-								<!-- <img src="/static/common/img/time_icon.png" width="14" height="14">--><span style="font-size:14px;">{$it.report_date}</span>
+								<span style="font-size:14px;">{$it.report_date}</span>
 							</div>
 						</div>
 					</div>
@@ -93,9 +93,9 @@
 			</div>
 			<div style="height:37px;"></div>
 			{/foreach}
-			<div style="background:#f0f0f9;width:800px;margin-left:45px;height:20px;text-align:center;line-height:8px;font-size:14px;color:#9191af;cursor:pointer" onclick="viewReport()">查看更多研报</div>
+			<div class="index_more" onclick="viewReport()">查看更多研报</div>
 		</div>
-		<div style="float:right;width:500px;height:1000px;">
+		<div style="float:right;height:1000px;width:500px;">
 			{foreach name="$show['pro-data']['data']" item="pro"}
 				<div class="right_card">
 					<a href='{:url("Project/index",["id" => $pro.id])}' target="_blank" title="{$pro.name}">
@@ -146,22 +146,15 @@
 				<div style="float:right;width:450px;height:30px;"></div>
 			{/foreach}
 			
-			
-			<!-- <div class="right_banner">
-				<a href="/home/project/index/id/100"><img src="/static/common/img/banner1.png" width="440"></a>
-			</div>-->
-			<div class="right_banner">
+			<div class="right_banner_index">
 				<a href="/home/project/index/id/127"><img src="/static/common/img/banner2.png" width="440"></a>
 			</div>
-			<div class="right_banner">
+			<div class="right_banner_index">
 				<a href="/home/project/index/id/128"><img src="/static/common/img/banner3.png" width="440"></a>
 			</div>
-			<div class="right_banner">
+			<div class="right_banner_index">
 				<a href="/home/project/index/id/125"><img src="/static/common/img/banner4.png" width="440"></a>
 			</div>
-			<!-- <div class="right_banner">
-				<a href="/home/project/index/id/131"><img src="/static/common/img/banner5.png" width="440"></a>
-			</div>-->
 		</div>
 	</div>
 	

@@ -2,12 +2,13 @@
 	<div class="container" style="height:120px;">
 		<div class="index_header" style="margin-left:0px;">
 			<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+			
 			<ul>
 				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
 				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
 				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
 				<li><a href='{:url("Index/listorganize")}' title="找资金">找资金</a></li>
-				<li><a style="font-size:22px;color:#222222;" href="javascript:;" title="找项目">找项目</a></li>
+				<li><a style="font-size:22px;color:#222222;" href='javascript:;' title="找项目">找项目</a></li>
 				<li><a href="/" title="首页">首页</a></li>
 			</ul>
 		</div>
@@ -42,7 +43,7 @@
 		    </div>
 		    <div id="page-search-store" class="sxcon">
 		        <div class="search-by">
-		            <dl class="relative">
+		            <!-- <dl class="relative">
 		                <dt class="service_title"><span class="title_dt">业务细分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 		                {foreach name="$service" item="it"}
 		                	<a href="javascript:;" data-id="{$it.id}" id="href_{$it.id}" onclick="show_s({$it.id})">{$it.value}<i class="icon-angle-down" id="sicon_{$it.id}"></i></a>
@@ -55,10 +56,10 @@
 		                	{/foreach}
 		                	</dd>
 		                {/foreach}
-					</dl>
+					</dl>-->
 					<dl class="relative">
 		                <dt class="industry_title"><div class="title_dt">行业细分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-		                 <div style="width:1100px;float:left;">
+		                 <div class="wspan" style="float:left;">
 		                {foreach name="$industry" item="it"}
 		                	<a href="javascript:;" data-id="{$it.id}" id="href_{$it.id}"  onclick="show_in({$it.id})">{$it.value}<i class="icon-angle-down" id="in_icon_{$it.id}"></i></a>
 		                {/foreach}
@@ -82,7 +83,7 @@
 					<dl class="relative">
 		             	<dt class="area_title">
 		             	 <div class="title_dt">地区选择&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-		                 <div style="width:1100px;float:left;">
+		                 <div class="wspan" style="float:left;">
 		                {foreach name="$province" item="it"}
 		                	<div style="float:left;" class="show-con" ><a href="/" data-id="{$it.id}">{$it.value}</a></div>
 		                {/foreach}
@@ -123,13 +124,13 @@
 		</div>
 		<div class="container_right">
 			<div class="right_banner">
-				<a href="/home/project/index/id/127"><img src="/static/common/img/banner2.png" width="440"></a>
+				<a href="/home/project/index/id/127"><img src="/static/common/img/banner2.png"></a>
 			</div>
 			<div class="right_banner">
-				<a href="/home/project/index/id/128"><img src="/static/common/img/banner3.png" width="440"></a>
+				<a href="/home/project/index/id/128"><img src="/static/common/img/banner3.png" ></a>
 			</div>
 			<div class="right_banner">
-				<a href="/home/project/index/id/125"><img src="/static/common/img/banner4.png" width="440"></a>
+				<a href="/home/project/index/id/125"><img src="/static/common/img/banner4.png"></a>
 			</div>
 		</div>
 	</div>
