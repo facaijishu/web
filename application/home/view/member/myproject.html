@@ -1,0 +1,214 @@
+{include file="base/header_new" /}
+	<div class="container" style="height:120px;">
+		<div class="index_header" style="margin-left:0px;">
+		<div style="float:left;margin-top:40px;width:500px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+			<ul>
+				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
+				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
+				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Index/listorganize")}' >找资金</a></li>
+				<li><a style="font-size:22px;color:#222222;" href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
+				<li><a href="/" title="首页">首页</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="container" style="height:100px;">
+		<div class="index_search_s" style="top:0;">
+			<div class="detail_menu">
+				<a href="/home/member/index" title="个人中心">个人中心</a> &nbsp;>&nbsp;
+				<a href="javascript:;" title="项目">我的项目</a>
+			</div>
+		</div>
+	</div>
+	<div class="container" style="height:80px;">
+		<div class="list_icon">
+			<a href="javascript:;" id="appr_href" onclick="viewList(1)" style="color:#357cf6;" title="审核中">
+				<img src="/static/common/img/pro_icon_on.png" id="pro_on">
+				<img src="/static/common/img/pro_icon_off.png" id="pro_off" style="display:none">
+				&nbsp;&nbsp;审核中
+			</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="javascript:;" id="on_href" onclick="viewList(2)" title="上架中">
+				<img src="/static/common/img/org_icon_on.png" id="org_on" style="display:none">
+				<img src="/static/common/img/org_icon_off.png" id="org_off">
+				&nbsp;&nbsp;上架中
+			</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="javascript:;" id="down_href" onclick="viewList(3)" title="已结束">
+				<img src="/static/common/img/org_icon_on.png" id="find_on" style="display:none">
+				<img src="/static/common/img/org_icon_off.png" id="find_off">
+				&nbsp;&nbsp;已结束
+			</a>
+		</div>
+	</div>
+	<div id="box" class="container" style="height:840px;">
+		<div class="view_list">
+			<div style="width:960px;height:100%;">
+				<div v-if="total == 0" style="text-align:center;">
+					<img src="/static/common/img/no_list.png">
+		    	</div>
+		    	<div v-else>
+		    		<div class="hot_item" style="width:430px;margin-right:48px;" v-for="item in approList">
+						<a :href='item.link' target="_blank">
+						<div class="hot_item_content">
+							<div class="list_title" style="margin:22px 44px 27px 44px;line-height:50px;height:50px;" :title="item.name">{{item.name}}
+								<div style="float:right;width:46px;height:46px;border-radius:23px;"><img src="/static/common/img/default.png"></div>
+							</div>  
+							<div class="list_content" style="width:360px;line-height:30px;margin-left:44px;height:60px;" :title="item.introduction">{{item.bottom}}</div>
+							<div style="font-size:14px;margin:0 44px 44px 44px;line-height:40px;height:40px;">
+								<div style="float:left;color:#ff2359;" :title="item.label1"><span>{{item.label1}}</span><span style="margin-left:16px;" :title="item.label2">{{item.label2}}</span></div>
+								<div style="float:left;width:50px;height:30px;"></div>
+								<div style="float:right;text-align:center;line-height:30px;color:#9191af;" :title="item.status_name">{{item.status_name}}</div>
+							</div>
+						</div>
+						</a>
+					</div>
+		    	</div>
+			</div>
+			<div class="page_list"></div>
+			<input type="hidden" id="current" value="1">
+			<input type="hidden" id="status"  value="1">
+		</div>
+		<div class="container_right">
+			<div class="right_banner">
+				<a href="/home/project/index/id/127"><img src="/static/common/img/banner2.png"></a>
+			</div>
+			<div class="right_banner">
+				<a href="/home/project/index/id/128"><img src="/static/common/img/banner3.png" ></a>
+			</div>
+			<div class="right_banner">
+				<a href="/home/project/index/id/125"><img src="/static/common/img/banner4.png"></a>
+			</div>
+		</div>
+	</div>
+	{include file="base/footer_new" /}
+	<script type="text/javascript">
+		var vue = new Vue({
+		    el: "#box",
+		    data: {
+		        approList: [],
+		        onList: [],
+		        downList: [],
+		        pageCount: "",
+		        total: "",
+		    },
+		    mounted: function() {
+		        this.$nextTick(function() {
+		        	var current   = 1;
+		        	var status    = $("#status").val();
+		        	 $.ajax({
+		                    url: '/home/member/myProjectApi',
+		                    type: 'GET',
+		                    async: false,
+		                    dataType: 'json',
+		                    data: { "page": current,"status":status}
+		                })
+		                .done(function(res) {
+		                    if (res.code == 200) {
+		                        vue.approList 		= res.data['data'];
+		                        vue.pageCount  		= res.data['page'];
+		                        vue.total 			= res.data['total'];
+		                    }else{
+		                    	vue.approList = [];
+		                        vue.pageCount 	 	= 0;
+		                        vue.total 			= 0;
+		                    }
+		                });
+					$('.page_list').pagination({
+		        		pageCount: vue.pageCount,
+		        		current:current,
+		        		callback: function (api) {
+		        			$('.now').text(api.getCurrent());
+		        		}
+		        	}, function (api) {
+		        		$('.now').text(api.getCurrent());
+		        	});
+					
+					var str_w = vue.pageCount*60+60;
+					$('.page_list').css({"width":str_w+"px"});
+				});
+		    },
+		    methods: {
+		    	
+		    }
+		}); 
+		
+		function orderclick(current){
+			$("#current").val(current);
+			var status    = $("#status").val();
+			$.ajax({
+				url: '/home/member/myProjectApi',
+	            type: 'GET',
+	            async: false,
+	            dataType: 'json',
+	            data: { "page": current, "status":status}
+	        })
+	        .done(function(res) {
+	            if (res.code == 200) {
+	                vue.approList = res.data['data'];
+	                vue.pageCount  		= res.data['page'];
+	                vue.total 			= res.data['total'];
+	                if(vue.total==1){
+	                	$('.page_list').css('display','none'); 
+	                }
+	            }else{
+	            	vue.approList 		= [];
+	                vue.pageCount 	 	= 0;
+	                vue.total 			= 0;
+	            }
+	            $('.page_list').pagination({
+	        		pageCount: vue.pageCount,
+	        		current:current,
+	        		callback: function (api) {
+	        			$('.now').text(api.getCurrent());
+	        		}
+	        	}, function (api) {
+	        		$('.now').text(api.getCurrent());
+	        	});
+	            
+	            var str_w = vue.pageCount*60+60;
+				$('.page_list').css({"width":str_w+"px"});
+	        });
+		}
+		
+		function viewList(id){
+			if(id==1){
+				$("#appr_href").css("color","#357cf6");
+				$("#on_href").css("color","#666");
+				$("#down_href").css("color","#666");
+				$("#pro_on").show(); 
+				$("#pro_off").hide();
+				$("#org_on").hide(); 
+				$("#org_off").show();
+				$("#find_on").hide(); 
+				$("#find_off").show();
+				$("#status").val(1);
+			}
+			if(id==2){
+				$("#appr_href").css("color","#666");
+				$("#on_href").css("color","#357cf6");
+				$("#down_href").css("color","#666");
+				$("#pro_on").hide(); 
+				$("#pro_off").show();
+				$("#org_on").show(); 
+				$("#org_off").hide();
+				$("#find_on").hide(); 
+				$("#find_off").show();
+				$("#status").val(2);
+			}
+			if(id==3){
+				$("#appr_href").css("color","#666");
+				$("#on_href").css("color","#666");
+				$("#down_href").css("color","#357cf6");
+				$("#pro_on").hide(); 
+				$("#pro_off").show();
+				$("#org_on").hide(); 
+				$("#org_off").show();
+				$("#find_on").show(); 
+				$("#find_off").hide();
+				$("#status").val(3);
+			}
+			var current    = $("#current").val();
+			orderclick(current);
+		}
+	</script>
+	</body>
+</html>
