@@ -1,0 +1,51 @@
+{include file="base/header_new" /}
+	<div style="height:940px;background: url('/static/common/img/business_bg.png') top no-repeat;">
+	<div class="container" style="height:120px;">
+		<div class="index_header" style="margin-left:0px;color:#a7adf7;">
+			<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo_white.png" title="FA財"></a></div>
+			<ul>
+				<li><a href="javascript:;" title="个人中心"><img src="/static/common/img/member_on_icon.png" title="个人中心"></a></li>
+				<li><a style="color:#fff;" href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
+				<li><a style="color:#fff;" href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a style="color:#fff;" href='{:url("Index/listorganize")}' title="找资金">找资金</a></li>
+				<li><a style="color:#fff;" href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
+				<li><a style="color:#fff;" href="/" title="首页">首页</a></li>
+			</ul>
+		</div>
+	</div>
+	</div>
+	<div class="container">
+		<a href="#1">
+			<div id="1">
+				<img src="/static/common/img/business_01.png" title="技术服务">
+			</div>
+		</a>
+		<a href="#2">
+			<div id="2">
+				<img src="/static/common/img/business_02.png" title="经营服务">
+			</div>
+		</a>
+		<a href="#3">
+			<div id="3">
+				<img src="/static/common/img/business_03.png" title="招商服务">
+			</div>
+		</a>
+		<a href="#4">
+			<div id="4">
+				<img src="/static/common/img/business_04.png" title="资本服务">
+			</div>
+		</a>
+	</div>
+{include file="base/footer_new" /}
+	<script type="text/javascript">
+		$(function(){
+			var url = window.location.toString();
+		    var id = url.split("#")[1];
+		    if(id){
+		      var t = $("#"+id).offset().top;
+		      $(window).scrollTop(t);
+			}
+		});
+	</script>
+	</body>
+</html>
