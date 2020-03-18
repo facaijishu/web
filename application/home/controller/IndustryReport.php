@@ -5,12 +5,15 @@ class IndustryReport extends Base
 {
     public function index()
     {
-        if(empty(session("member"))){
+        $mem   = session("member");
+        $uid   = session("member")['uid'];
+        $type  = session("member")['type'];
+        if(empty($mem)){
             $login = 1;//显示项目
             
         }else{
-            if(session("member")['uid']>0){
-                if(session("member")['type']==1 || session("member")['type']==2){
+            if($uid>0){
+                if($type==1 || $type==2){
                     $login = 2;//显示机构
                 }else{
                     $login = 1;//显示项目
@@ -32,13 +35,15 @@ class IndustryReport extends Base
         $uid      = 0;
         $showflg  = 1;
         $search   = [];
-        if(empty(session("member"))){
+        $mem      = session("member");
+        $uid      = session("member")['uid'];
+        $type     = session("member")['type'];
+        if(empty($mem)){
             $login      = 1;//显示项目
             $showflg    = 0;
         }else{
-            if(session("member")['uid']>0){
-                $uid = session("member")['uid'];
-                if(session("member")['type']==1 || session("member")['type']==2){
+            if($uid>0){
+                if($type==1 || $type==2){
                     $login = 2;//显示机构
                 }else{
                     $login = 1;//显示项目
