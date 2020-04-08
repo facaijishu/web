@@ -1,259 +1,454 @@
 {include file="base/header_new" /}
-	<script>
-    	var captcha_url = "{:captcha_src()}";
-	</script>
 	<div class="container" style="height:120px;">
 		<div class="index_header" style="margin-left:0px;">
 			<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
 			<ul>
 				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
-				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
-				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Trilateral/index")}' title="三方演绎">三方演绎</a></li>
+				<li>
+				    <a href="#click" class="menu" title="资讯研报"> 资讯研报
+				      <ul class="menu-dropdown">
+				        <li onclick="viewNews()" title="资讯中心">资讯中心</li>
+				        <li onclick="viewReport()" title="研报中心">研报中心</li>
+				      </ul>
+				    </a>
+				</li>
 				<li><a href='{:url("Index/listorganize")}' title="找资金">找资金</a></li>
 				<li><a href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
 				<li><a href="/" title="首页">首页</a></li>
 			</ul>
 		</div>
 	</div>
-	<form action="/home/pub/doadd" method="post" id="addModal">
-	<div class="container" style="height:950px;">
-		<div style="float:left;height:900px;width:35%;"></div>
-		<div class="login_body" style="float:left;height:900px;width:40%;">
-			<ul>
-				<li><span style="line-height:40px;float:left;">项目简介：</span><div class="login_body_input"><input type="text" name="pro_name" id="pro_name" placeholder="项目简介" maxlength="25" /></div></li>
-				<li><span style="line-height:40px;float:left;">企业名称：</span><div class="login_body_input"><input type="text" name="company_name" id="company_name" placeholder="企业名称" maxlength="20" /></div></li>
-				<li><span style="line-height:40px;float:left;">业务简介：</span><div class="login_body_input"><input type="text" name="introduction" id="introduction" placeholder="业务简介" maxlength="50" /></div></li>
-				<li><span id="industry"></span></li>
-				<li><span id="service"></span></li>
-				<li><span style="line-height:40px;float:left;">融资金额：</span><div class="login_body_input"><input type="text" name="financing_amount" id="financing_amount" placeholder="融资金额" maxlength="6" /></div>（万元）</li>
-				<li><span style="line-height:40px;float:left;">行业分析：</span><div class="login_body_input"><input type="text" name="analysis_des" id="analysis_des" placeholder="行业分析" maxlength="255" /></div></li>
-				<li><span style="line-height:40px;float:left;">核心产品：</span><div class="login_body_input"><input type="text" name="product_des" id="product_des" placeholder="核心产品" maxlength="6" /></div></li>
-				<li><span style="line-height:40px;float:left;">业务亮点：</span><div class="login_body_input"><input type="text" name="enterprise_des" id="enterprise_des" placeholder="业务亮点" maxlength="6" /></div></li>
-				<li>
-					<div style="float:left;height:50px;width:72px;background:url('/static/common/img/up_bp.png')">
-						<input type="file" id="pro_file_bp" style="margin-top:-10px;opacity:0;filter:alpha(opacity=0);height:50px;width:72px;">
-						<input type="hidden" id="combpFile" name="com_bp_file" value="">
-					</div>
-				</li>
-				<li>
-				<div class="fileUploadContent" style="display:none;">
-					<div class="box">
-						<div class="fileItem" filecodeid="0">
-							<div class="imgShow">
-								<div class="fileType">PDF</div> 
-								<i class="iconfont icon-wenjian"></i> 
-							</div>
-							<div class="status">
-								<i class="iconfont icon-shanchu"></i>
-							</div> 
-							<div class="fileName"></div> 
+	<form action="/home/organize/doadd" method="post" id="editModal">
+	<div class="container" style="height:1450px;">
+		<div id="box" class="project_body" style="float:left;height:1450px;">
+			<div class="project_body1">
+				<ul>
+					<li style="margin:30px 0 30px 0px;"><span style="font-weight:bold;font-size:22px;">上传信息</span></li>
+					<li>
+						<span>企业简称：</span>
+						<div class="project_body_input"><input type="text" name="org_short_name" id="org_short_name" value="" placeholder="请输入项目简介" maxlength="50" /></div>
+						<div class="submit_error" id="org_short_error">
+							<div style="float:left;text-align:center;line-height:48px;"><img src="/static/common/img/error_icon.png" width="20" height="20"></div>
+							<div style="float:left;">&nbsp;必填项</div>
 						</div>
-					</div>
-					</div>
-				</li>
-				<!-- <li><span style="line-height:40px;float:left;">BP：</span><div style="float:left;" id="plan" class="fileUploadContent"></div> 
-				</li>-->
-				<div class="input_error" id="add_error" style="display:none;"></div>
-			</ul>
+					</li>
+					<li>
+						<span>企业名称：</span>
+						<div class="project_body_input"><input type="text" name="org_name" id="org_name" value="" placeholder="请输入企业名称" maxlength="50" style="width:400px;"/></div>
+						<div class="submit_error" id="org_name_error">
+							<div style="float:left;text-align:center;line-height:48px;"><img src="/static/common/img/error_icon.png" width="20" height="20"></div>
+							<div style="float:left;">&nbsp;必填项</div>
+						</div>
+					</li>
+					<li>
+						<span>&nbsp;&nbsp;&nbsp;联系人：</span>
+						<div class="project_body_input"><input type="text" name="contacts" id="contacts" value="{$mem.realName}" placeholder="请输入姓名" maxlength="50" /></div>
+						<div class="submit_error" id="contacts_error">
+							<div style="float:left;text-align:center;line-height:48px;"><img src="/static/common/img/error_icon.png" width="20" height="20"></div>
+							<div style="float:left;">&nbsp;必填项</div>
+						</div>
+					</li>
+					
+					<li>
+						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;职务：</span>
+						<div class="project_body_input"><input type="text" name="position" id="position" value="" placeholder="请填写职务" maxlength="6" /></div>
+						<div class="submit_error" id="position_error">
+							<div style="float:left;text-align:center;line-height:48px;"><img src="/static/common/img/error_icon.png" width="20" height="20"></div>
+							<div style="float:left;">&nbsp;必填项</div>
+						</div>
+					</li>
+					<li>
+						<span>手机号码：</span>
+						<div class="project_body_input"><input type="text" name="contact_tel" id="contact_tel" value="{$mem.userPhone}" placeholder="请填写手机号码" maxlength="6" /></div>
+						<div class="submit_error" id="position_error">
+							<div style="float:left;text-align:center;line-height:48px;"><img src="/static/common/img/error_icon.png" width="20" height="20"></div>
+							<div style="float:left;">&nbsp;必填项</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="project_body2">
+				<ul>
+					<li style="height:310px;width:1150px;">
+						<span>行业细分：</span>
+						<div id="incRadio" class="dropselect dropUl" style="top:454px; left: 240px; width: 900px; height: 300px; display:block;">
+			    			<div style="float:left;width:100%;">
+				    		    <div style="height:5px;">&nbsp;</div>
+				    		    {foreach name="industryList" item="inc"}
+						            <ul id="inc_{$inc.id}">
+							            <li style="width:800px;float:left;height:20px;" >
+							            	<div style="width:800px;float:left;height:30px;color:#357cf6;">{$inc.value}</div>
+							            	{foreach name="$inc.sub" item="sub"}
+								            	<div style="width:230px;float:left;height:30px;">
+										            {if condition="$sub.checked eq 1"}
+										            <div class="advice_checked" id="incsub" data-id="{$sub.id}"></div>
+										            <input type="checkbox" name="inc" id="inc_check_{$sub.id}" value="{$sub.id}" checked="checked" style="display:none;">
+										            {else/}
+										            <div class="advice" id="incsub" data-id="{$sub.id}"></div>
+										            <input type="checkbox" name="inc" id="inc_check_{$sub.id}" value="{$sub.id}" style="display:none;">
+										            {/if}
+								            		<div style="float:left;line-height:20px;margin-left:5px;">{$sub.value}</div>
+								            	</div>
+							            	{/foreach}
+							            </li>
+						            </ul>
+					            {/foreach}
+					            <input type="hidden" name="inc_str" id="inc_str" value="" >
+					        </div>
+				    	</div>
+				    	<div class="submit_error" id="industry_error" style="margin-top:150px;">
+							<div style="float:left;text-align:center;line-height:48px;"><img src="/static/common/img/error_icon.png" width="20" height="20"></div>
+							<div style="float:left;">&nbsp;请选择行业细分</div>
+						</div>
+					</li>
+					<li style="height:80px;width:1150px;">
+						<span>业务类型：</span>
+						<div id="typeRadio" class="dropselect" style="top:782px; left: 240px; width:280px; height: 60px; display:block;float:left;">
+			    			<div style="float:left;width:100%;">
+				    		    <div style="height:5px;">&nbsp;</div>
+					            <ul>
+					            	{foreach name="typeList" item="type"}
+						            <li style="width:80px;float:left;height:20px;">
+							            <label><input type="radio" id="type_radio_{$type.id}"  name="type" value="{$type.id}"/>{$type.value}</label>
+						            </li>
+					            	{/foreach}
+					            </ul>
+					        </div>
+				    	</div>
+				    	<div class="submit_error" id="type_error" style="margin-top:30px;margin-left:300px;float:left;">
+							<div style="float:left;text-align:center;line-height:48px;"><img src="/static/common/img/error_icon.png" width="20" height="20"></div>
+							<div style="float:left;">&nbsp;请选择业务类型</div>
+						</div>
+				    </li>
+					<li style="height:80px;width:1150px;">
+						<span>投资阶段：</span>
+						<div id="stageRadio" class="dropselect" style="top:876px; left: 240px; width: 900px; height: 70px; display:block;">
+			    			<div style="float:left;width:100%;">
+				    		    <div style="height:5px;">&nbsp;</div>
+					            <ul>
+					            	{foreach name="stageList" item="stage"}
+						            <li style="width:120px;float:left;height:20px;">
+							            {if condition="$stage.checked eq 1"}
+							            <div class="advice_checked" id="stagesub" data-id="{$stage.id}"></div>
+							            <input type="checkbox" name="stage" id="stage_check_{$stage.id}" value="{$stage.id}" checked="checked" style="display:none;">
+							            {else/}
+							            <div class="advice" id="stagesub" data-id="{$stage.id}"></div>
+							            <input type="checkbox" name="stage" id="stage_check_{$stage.id}" value="{$stage.id}" style="display:none;">
+							            {/if}     
+						            	<div style="float:left;line-height:20px;margin-left:5px;">{$stage.value}</div>
+						            </li>
+					            	{/foreach}
+					            	<input type="hidden" name="stage_str" id="stage_str" value="" >
+					            </ul>
+					        </div>
+				    	</div>
+				    	<div class="submit_error" id="stage_error" style="margin-top:30px;">
+							<div style="float:left;text-align:center;line-height:48px;"><img src="/static/common/img/error_icon.png" width="20" height="20"></div>
+							<div style="float:left;">&nbsp;请选择投资阶段</div>
+						</div>
+				    </li>
+				    <li style="height:205px;width:1150px;">
+						<span>所属区域：</span>
+						<div id="areaRadio" class="dropselect" style="top:972px; left: 240px; width:900px; height: 180px; display:block;">
+			    			<div style="float:left;width:100%;">
+				    		    <div style="height:5px;">&nbsp;</div>
+					            <ul>
+					            	{foreach name="areaList" item="area"}
+						            <li style="width:80px;float:left;height:20px;">
+						            	{if condition="$area.checked eq 1"}
+							            <div class="advice_checked" id="areasub" data-id="{$area.id}"></div>
+							            <input type="checkbox" name="area" id="area_check_{$area.id}" value="{$area.id}" checked="checked" style="display:none;">
+							            {else/}
+							            <div class="advice" id="areasub" data-id="{$area.id}"></div>
+							            <input type="checkbox" name="area" id="area_check_{$area.id}" value="{$area.id}" style="display:none;">
+							            {/if}
+						            	<div style="float:left;line-height:20px;margin-left:5px;">{$area.value}</div>
+						            </li>
+					            	{/foreach}
+					            	<input type="hidden" name="area_str" id="area_str" value="" >
+					            </ul>
+					        </div>
+				    	</div>
+				    	<div class="submit_error" id="area_error" style="margin-top:80px;">
+							<div style="float:left;text-align:center;line-height:48px;"><img src="/static/common/img/error_icon.png" width="20" height="20"></div>
+							<div style="float:left;">&nbsp;请选择所属区域</div>
+						</div>
+				    </li>
+				</ul>
+			</div>
+			 <div class="project_body3" >
+				<ul>
+					<li>
+						<span>投资案例：</span>
+						<div class="project_body_input"><input type="text" name="inc_target" id="inc_target" value="{$info.inc_target}" placeholder="请输入案例" maxlength="200" style="width:800px;"/></div>
+						<div class="submit_error" id="inc_target_error">
+							<div style="float:left;text-align:center;line-height:48px;"><img src="/static/common/img/error_icon.png" width="20" height="20"></div>
+							<div style="float:left;">&nbsp;必填项</div>
+						</div>
+					</li>
+					<input type="hidden" id="id" value="{$info.org_id}">
+					<li style="float:left;width:440px;height:160px;">
+						<div class="input_error" id="add_error" style="display:none;text-align:center;margin-top:0;margin-left:50px;color:#d81e06;" ></div>
+						<div class="login_submit" onclick="return editCheck()" title="提交" style="text-align:center;margin-top:45px;margin-left:50px;">提&nbsp;&nbsp;交</div>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div style="float:left;height:900px;width:25%;">
-			<div style="float:left;height:45px;width:85px;background:url('/static/common/img/up_img.png')">
-				<input type="file" id="pro_file_img" style="margin-top:-10px;opacity:0;filter:alpha(opacity=0);height:45px;width:85px;">
-			</div>			
-			<input type="hidden" id="compressFile" name="com_file">
-			<div style="float:left;width:138px;height:138px;"><img src="" id="next"></div>
-		</div>
-	</div>
-	<div class="container" style="height:90px;">
-		<div class="login_submit" onclick="return addCheck()" title="提交" style="text-align:center;margin-top:0;margin-left:35%;">提&nbsp;交</div>
 	</div>
 	</form>
 	{include file="base/footer_new" /}
 </body>
-<script>
-	var service  = [];
-	var industry = [];
-	var vue = new Vue({
-	    el: "#box",
-	    data: {
-	    	serviceList: [],
-	    	industryList: [],
-	    },
-	    mounted: function() {
-	        this.$nextTick(function() {
-	        	 $.ajax({
-	                    url: '/home/dict/dictApi',
-	                    type: 'GET',
-	                    async: false,
-	                    dataType: 'json',
-	                    data: {}
-	                })
-	                .done(function(res) {
-	                    if (res.code == 200) {
-	                        vue.serviceList 	= res.data['data_s'];
-	                        vue.industryList  	= res.data['data_i'];
-	                        service  = vue.serviceList;
-	                        industry = vue.industryList;
-	                    }else{
-	                    	vue.serviceList 	= [];
-	                        vue.industryList 	= [];
-	                    }
-	                });
-	        	 
-	        	 $.fn.AddSelect = function (opation) {
-	                 var _arg   = $.extend({data: "", name:"",}, opation);
-	                 var _this1 = this;
-	                 if (_arg.data) {
-	                     var _dt    = _arg.data;
-	                     var _name  = _arg.name;
-	                     var _html  = "";
-	                     
-	                     _html 	   += '<select id="'+_name+'">'; //初级设置
-	                     _html 	   += '<option value="0">请选择</option>';
-	                     for (var i = 0; i < _dt.length; i++) {
-	                         _html += '<option value="' + _dt[i]['id'] + '|' + i + '">' + _dt[i]['value'] + '</option>';
-	                     }
-	                     _html     += '</select>';
-	                     $(_this1).html(_html);
-	                     
-	                     function _select1() {
-	                         $(_this1).children("select").change(function () {
-	                             var _this2 = this;
-	                             var _val   = $(_this2).val().split("|")[1];
-	                             
-	                             $(_this2).nextAll("select").remove();
-	                             var _sub   = _dt[_val]['sub'];
-	                             var _str   = "";
-	                             _str 	   += '<select>';
-                                 _str 	   += '<option value="0">请选择</option>';
-                                 for (var i = 0; i < _sub.length; i++) {
-                                     _str  += '<option value="' + _sub[i]['id'] + '">' + _sub[i]['value'] + '</option>';
-                                 }
-                                 _str += '</select>';
-                                 $(_this2).after(_str);
-	                         })
-	                     }
-	                     _select1();
-	                 }
-	             }
-	        	 $("#service").AddSelect({
-	                 data: service, 
-	                 name:"service_select",
-	             })
-	             
-	             $("#industry").AddSelect({
-	                 data: industry, 
-	                 name:"industry_select",
-	             })
-			});
-	    },
-	    methods: {
-	    	
-	    }
-	}); 
+<script type="text/javascript">
+	var w 	     = $(window).width();
+	if(w>=1440){
+		str_w 	 = (1440-1200)/2;
+		str_left = str_w+200;
+		btn      = str_w+260;
+		$(".project_body").css({"margin-left":str_w+"px"}); 
+		$(".input_error").css({"margin-left":btn+"px"});  
+		$(".login_submit").css({"margin-left":btn+"px"});  
+	}
+</script>
 	
+<script>
 	$(function () {
-		$(".icon-shanchu").click(function(){
-			$("#combpFile").val('');
-			$(".fileName").html('');
-			$(".fileUploadContent").css("display","none");
-		});
+		$("#inc_408").css({"height":"280px"}); 
+		$("#inc_396").css({"height":"160px"}); 
+		$("#inc_402").css({"height":"130px"}); 
+		$("#inc_448").css({"height":"160px"}); 
+		$("#inc_373").css({"height":"190px"}); 
+		$("#inc_418").css({"height":"160px"}); 
+		$("#inc_388").css({"height":"160px"}); 
+		$("#inc_414").css({"height":"130px"}); 
+		$("#inc_384").css({"height":"130px"}); 
+		$("#inc_410").css({"height":"160px"}); 
+		$("#inc_420").css({"height":"130px"}); 
+		$("#inc_412").css({"height":"130px"}); 
+		$("#inc_369").css({"height":"160px"}); 
+		$("#inc_474").css({"height":"120px"});
+		
+		$(document.body).on('click','div#incsub',function(){
+	    	var id  = $(this).attr("data-id");
+			if($(this).hasClass("advice_checked")){
+				$(this).removeClass("advice_checked");
+				$(this).addClass("advice"); 
+				$("#inc_check_"+id).prop("checked",false);
+				$("#inc_check_"+id).attr("checked",false);
+			}else{
+				$(this).addClass("advice_checked"); 
+				$(this).removeClass("advice");
+				$("#inc_check_"+id).prop("checked","checked"); 
+				$("#inc_check_"+id).attr("checked","checked");
+			}
+	    });
+		
+		//点击投资阶段
+	    $('.typeSelect').on('click',function(){
+	    	$('#typeselected').toggle();
+	    	//点击一级
+            $('.typeFirstLi').on('click',function(){
+                $('.typeName').text(arr_type[$(this).index()]);
+                $('#typeselected').css('display',"none");
+            });
+            //给一级列表添加mouseover事件
+            $('.typeFirstLi').on('mouseover',function(){
+                $('.typeFirstLi').css("background-color","white");
+                $('.typeFirstLi').css("color","#222222");
+                $(this).css("background-color","#eff5ff");
+                $(this).css("color","#3278f5");
+            });
+	    });
+		
+		$(document.body).on('click','div#stagesub',function(){
+	    	var id  = $(this).attr("data-id");
+			if($(this).hasClass("advice_checked")){
+				$(this).removeClass("advice_checked");
+				$(this).addClass("advice"); 
+				$("#stage_check_"+id).prop("checked",false);
+				$("#stage_check_"+id).attr("checked",false);
+			}else{
+				$(this).addClass("advice_checked"); 
+				$(this).removeClass("advice");
+				$("#stage_check_"+id).prop("checked","checked"); 
+				$("#stage_check_"+id).attr("checked","checked");
+			}
+	    });
+		
+		$(document.body).on('click','div#areasub',function(){
+	    	var id  = $(this).attr("data-id");
+			if($(this).hasClass("advice_checked")){
+				$(this).removeClass("advice_checked");
+				$(this).addClass("advice"); 
+				$("#area_check_"+id).prop("checked",false);
+				$("#area_check_"+id).attr("checked",false);
+			}else{
+				$(this).addClass("advice_checked"); 
+				$(this).removeClass("advice");
+				$("#area_check_"+id).prop("checked","checked"); 
+				$("#area_check_"+id).attr("checked","checked");
+			}
+	    });
 	});
-
-    
-	function addCheck(){
-		var pro_name      		= $("#addModal").find("input[name='pro_name']").val();
-		var company_name 	  	= $("#addModal").find("input[name='company_name']").val();
-        var introduction 	    = $("#addModal").find("input[name='introduction']").val();
-        var financing_amount	= $("#addModal").find("input[name='financing_amount']").val();
-        var analysis_des       	= $("#addModal").find("input[name='analysis_des']").val();
-        var product_des       	= $("#addModal").find("input[name='product_des']").val();
-        var enterprise_des		= $("#addModal").find("input[name='enterprise_des']").val();
+	
+	function editCheck(){
+		$("#org_short_error").css("display","none");
+		$("#org_name_error").css("display","none");
+		$("#contacts_error").css("display","none");
+		$("#position_error").css("display","none");
+		$("#industry_error").css("display","none");
+		$("#stage_error").css("display","none");
+		$("#area_error").css("display","none");
+		$("#type_error").css("display","none");
+		$("#inc_target_error").css("display","none");
+		$("#add_error").css("display","none");
+		
+		//行业细分
+		var incList = "";
+		$("input:checkbox[name='inc']:checked").each(function () {
+        	if(incList==""){
+        		incList = $(this).val();
+        	}else{
+        		incList = incList+","+$(this).val();
+        	}
+        });
+        $("#inc_str").val(incList);
         
-        //var position      		= $("#addModal").find("input[name='position']").val();
-        var serviceType 	  	= $("#service_select").find("option:selected").val().split("|")[0];
-        var industryType 	  	= $("#industry_select").find("option:selected").val().split("|")[0];
         
-        //var check 		  = $("input[type='checkbox']").is(':checked');
-        var _val   = serviceType.split("|")[0];
-        var com_file    = $("#addModal").find("input[name='com_file']").val();
-        var com_bp_file = $("#addModal").find("input[name='com_bp_file']").val();
+        //投资阶段
+		var stageList = "";
+		$("input:checkbox[name='stage']:checked").each(function () {
+        	if(stageList==''){
+        		stageList = $(this).val();
+        	}else{
+        		stageList = stageList+","+$(this).val();
+        	}
+        });
+        $("#stage_str").val(stageList);
         
-        if (pro_name == '') {
-            $("#add_error").html("请输入项目简介");
+        //所述区域
+        var areaList = "";
+		$("input:checkbox[name='area']:checked").each(function () {
+        	if(areaList==''){
+        		areaList = $(this).val();
+        	}else{
+        		areaList = areaList+","+$(this).val();
+        	}
+        });
+        $("#area_str").val(areaList);
+        
+		var id 					= $('#id').val();
+		var org_name      		= $("#editModal").find("input[name='org_name']").val();
+		var org_short_name 	  	= $("#editModal").find("input[name='org_short_name']").val();
+        var contacts 	    	= $("#editModal").find("input[name='contacts']").val();
+        var position 			= $("#editModal").find("input[name='position']").val();
+        var contact_tel       	= $("#editModal").find("input[name='contact_tel']").val();
+        var inc_target		    = $("#editModal").find("input[name='inc_target']").val();
+        var industry    		= $("#editModal").find("input[name='inc_str']").val();
+        var stage    		    = $("#editModal").find("input[name='stage_str']").val();
+        var area    		    = $("#editModal").find("input[name='area_str']").val();
+        alert(industry);
+        var type = "";
+		$("input:radio[name='type']:checked").each(function () {
+			type = $(this).val();
+        });
+        if (org_short_name == '') {
+            $("#add_error").html("请输入企业简称");
             $("#add_error").css("display","block");
+            $("#org_short_error").css("display","block");
             return false;
         }
-      
-        if (company_name == '') {
+        
+        if (org_name == '') {
             $("#add_error").html("请输入企业名称");
             $("#add_error").css("display","block");
+            $("#org_name_error").css("display","block");
             return false;
         }
         
-        if (introduction == '') {
-            $("#add_error").html("请输入业务简介");
+        if (contacts == '') {
+            $("#add_error").html("请输入联系人");
             $("#add_error").css("display","block");
+            $("#contacts_error").css("display","block");
             return false;
         }
         
-        if(serviceType==0){
-        	$("#add_error").html("请选择行业");;
+        if(position== ''){
+        	$("#add_error").html("请输入职务");
             $("#add_error").css("display","block");
+            $("#position_error").css("display","block");
             return false;
         }
         
-        if(industryType==0){
-        	$("#add_error").html("请选择业务");;
+        if(contact_tel== ''){
+        	$("#add_error").html("请输入手机号码");
             $("#add_error").css("display","block");
+            $("#contact_tel_error").css("display","block");
+        }
+        if(industry == '') {
+            $("#add_error").html("请选择行业");
+            $("#add_error").css("display","block");
+            $("#industry_error").css("display","block");
             return false;
         }
         
-        if (financing_amount == '') {
-            $("#add_error").html("请输入融资金额");
+        if(type == '') {
+            $("#add_error").html("请选择业务类型");
             $("#add_error").css("display","block");
+            $("#type_error").css("display","block");
             return false;
         }
         
-        if (analysis_des == '') {
-            $("#add_error").html("请输入行业分析");
+        if(stage == '') {
+            $("#add_error").html("请选择投资阶段");
             $("#add_error").css("display","block");
+            $("#stage_error").css("display","block");
             return false;
         }
         
-        if (product_des == '') {
-            $("#add_error").html("请输入核心产品");
+        if (area == '') {
+            $("#add_error").html("请选择区域");
             $("#add_error").css("display","block");
+            $("#area_error").css("display","block");
             return false;
         }
         
-        if (enterprise_des == '') {
-            $("#add_error").html("请输入业务亮点");
+        if(inc_target== ''){
+        	$("#add_error").html("请输入投资案例");
             $("#add_error").css("display","block");
+            $("#inc_target_error").css("display","block");
             return false;
         }
         
         $("#add_error").html("");
         $("#add_error").css("display","none");
+        $(".login_submit").css("display","none");
         
         $.ajax({
-            url: "{:url('project/doAdd')}",
-            data: {com_bp_file:com_bp_file,com_file:com_file,pro_name:pro_name, company_name:company_name, introduction:introduction, financing_amount:financing_amount, analysis_des:analysis_des, product_des:product_des, enterprise_des:enterprise_des},
-         
-            type: "POST",
+            url: "{:url('Organize/doAdd')}",
+            data: {id:id, org_name:org_name, org_short_name:org_short_name,contacts:contacts, position:position, contact_tel:contact_tel, inc_target:inc_target, industry:industry,type:type, stage:stage, area:area},
+         	type: "POST",
             dataType: 'json',
             success: function(resp){
             	if(resp.code==200){
                     $("#add_error").css("display","none");
+                    window.location.href = "/home/member/index";
             	}else {
             		$("#add_error").html(resp.msg);
                     $("#add_error").css("display","block");
+                    $(".login_submit").css("display","block");
                 }
             }
         });
 	}
 	
-	
+	function viewNews(){
+		window.location.href = '/home/news/lists';
+	}
+    		
+    function viewReport(){
+    	window.location.href = '/home/industry_report/lists';
+    }
     </script>
 </html>
 
