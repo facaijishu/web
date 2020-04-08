@@ -332,4 +332,20 @@ class Project extends Base
             $this->result('' ,'201', '编辑失败' , 'json');
         }
     }
+    
+    
+    public function prolist(){
+        $id          = $this->request->param('id/d');
+        $show        = model("ProjectDictShow")->getInfo($id);
+        if(!empty($show)){
+            $model   = model("Project");
+            $project = $model->getProjectShowDs($show['pro_ids']);
+        }else{
+            $project = array();
+        }
+        $this->assign('title' , $show['title']."｜FA財-一站式智能信息投融交互平台");
+        $this->assign('project',$project);
+        $this->assign('show',$show);
+        return view();
+    }
 }
