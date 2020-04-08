@@ -1,0 +1,108 @@
+{include file="base/header_new" /}
+	<div class="container" style="height:130px;">
+		<div class="index_header" style="margin-left:0px;">
+			<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
+			<ul class="hList">
+				 <li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
+				 <li><a style="font-size:22px;color:#222222;" href='{:url("Trilateral/index")}' title="三方演绎">三方演绎</a></li>
+				 <li>
+				    <a href="#click" class="menu" title="资讯研报"> 资讯研报
+				      <ul class="menu-dropdown">
+				        <li onclick="viewNews()" title="资讯中心">资讯中心</li>
+				        <li onclick="viewReport()" title="研报中心">研报中心</li>
+				      </ul>
+				    </a>
+				</li>
+				<li><a href='{:url("Index/listorganize")}' title="找资金">找资金</a></li>
+				<li><a href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
+				<li><a href="/"  title="首页">首页</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="trilateral_bg">
+		<div class="container" style="line-height:30px;">
+			<div style="float:left;width:10%;margin-top:50px;">&nbsp;</div>
+			<div class="trilateral_detail" style="float:left;">
+			{if($info.video_url==NULL)}
+				<img src="{$info.index_img_url}">
+    		{else/}
+    			<video poster="{$info.index_img_url}" controls="controls" x5-playsinline="" playsinline="" webkit-playsinline="" x-webkit-airplay="allow" style="oobject-fit:fill;">
+	    			<source src="http://fin.test.jrfacai.com/uploads/trilateral/video/20200403/20200312.mp4" type="video/mp4">
+	    		</video>
+    		{/if}
+			</div>
+			<div class="trilateral_detail_r" style="float:left;">
+				<div style="height:50px;"></div>
+				<div><span style="color:#696969;">路演时间&nbsp;&nbsp;&nbsp;&nbsp;</span>{$info.meetingtime}</div>
+				<div><span style="color:#696969;">路演类型&nbsp;&nbsp;&nbsp;&nbsp;</span>{$info.type}</div>
+				<div><span style="color:#696969;">协办方&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{$info.cosponsor}</div>
+				<div><span style="color:#696969;">参会人数&nbsp;&nbsp;&nbsp;&nbsp;</span>{$info.num}</div>
+				<div class="trilateral_btn" onclick="showBox()">我要咨询</div>
+			</div>
+			<div class="trilateralBox" id="popBox">
+			    <div class="popClose">
+			        <a href="javascript:void(0)" onclick="closeBox()"><img src="/static/common/img/close.png"></a>
+			    </div>
+			       <div class="popContent">
+				    <div class="popImg">
+				    	<span style="font-size:14px;color:#ff0000;">微信扫码加财哥了解更多</span>
+				    	<img src="/static/common/img/kefuQr.jpg" width="220" height="220">
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="detail" class="container" style="height:1500px;color:#565682;letter-spacing:3px;">
+		<div style="float:left;width:780px;">
+			<div class="detail_body" style="margin-top:50px;">
+				&nbsp;&nbsp;&nbsp;&nbsp;{$info.content}
+			</div>
+			<div class="detail_body" style="margin-top:50px;">
+				<span style="font-size:20px;font-weight:bold;line-height:50px;">路演项目</span>
+				{foreach name="$project" item="item"}
+				<div style="margin-left:20px;margin-bottom:10px;">
+					<a target="_blank" href="/home/project/index/id/{$item.id}" title="{$item.top}">{$item.top}</a>
+				</div>
+				{/foreach}
+				{$info.content_img}
+			</div>
+		</div>
+		<div class="trilateral_view" style="float:right;">
+			<div class="trilateral_view_title">往期回顾</div>
+			{foreach name="$nlist" item="it"}
+			<div class="trilateral_right" style="float:left;width:100%;margin-bottom:20px;" onclick="openview({$it.id})">
+				<div style="float:left;"><img src="{$it.top_url}" width="200" height="120"></div>
+				<div class="trilateral_view_time">
+					<span style="font-size:14px;font-weight:bold;">&nbsp;{$it.title}</span><br/><br/>
+					<span style="font-size:12px;">&nbsp;{$it.meetingtime}</span>
+				</div>
+			</div>
+			{/foreach}
+		</div>
+	</div>
+
+{include file="base/footer_new" /}
+	<script type="text/javascript">
+		function showBox(){
+			$("#popBox").show();
+		}
+		
+		function closeBox(){
+			$("#popBox").hide();
+		}
+		
+		function viewNews(){
+			window.location.href = '/home/news/lists';
+		}
+		
+		function viewReport(){
+			window.location.href = '/home/industry_report/lists';
+		}
+		
+		function openview(id){
+			window.location.href = '/home/trilateral/detail/id/'+id;
+		}
+		
+	</script>
+	</body>
+</html>
