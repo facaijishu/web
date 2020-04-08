@@ -1,18 +1,27 @@
 {include file="base/header_new" /}
-	<div class="container" style="height:120px;">
+	<div class="container" style="height:130px;">
 		<div class="index_header" style="margin-left:0px;">
 			<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
-			<ul>
-				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
-				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
-				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+			<ul class="hList">
+				 <li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
+				 <li><a href='{:url("Trilateral/index")}' title="三方演绎">三方演绎</a></li>
+				 <li>
+				    <a href="#click" class="menu" title="资讯研报"> 资讯研报
+				      <ul class="menu-dropdown">
+				        <li onclick="viewNews()" title="资讯中心">资讯中心</li>
+				        <li onclick="viewReport()" title="研报中心">研报中心</li>
+				      </ul>
+				    </a>
+				</li>
+				<!-- <li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
+				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>-->
 				<li><a href='{:url("Index/listorganize")}' title="找资金">找资金</a></li>
 				<li><a href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
 				<li><a style="font-size:22px;color:#222222;" href="javascript:;" title="首页">首页</a></li>
 			</ul>
 		</div>
 	</div>
-	<div class="container index_bg">
+	 <div class="container index_bg">
 		<div class="index_search">
 			<div class="index_search_left">
 				<div style="margin:0 32px 0 32px;"><img src="/static/common/img/search_icon.png"></div>
@@ -23,7 +32,7 @@
 			<div class="index_search_right"><a href="javascript:;" onclick="searchKey()" title="立即搜索">立即搜索</a></div>
 		</div>
 	</div>
-	<div class="container" style="height:1200px;">
+	<div class="container" style="height:1600px;">
 	<div class="hot_header"><span title="精选推荐">精选推荐</span></div>
 		<div class="container_left" style="height:1000px;">
 			{foreach name="$list_news" item="it"}
@@ -147,7 +156,7 @@
 			{/foreach}
 			
 			<div class="right_banner_index">
-				<a href="/home/project/index/id/127"><img src="/static/common/img/banner2.png" width="440"></a>
+				<a href="/home/project/prolist/id/1"><img src="/static/common/img/banner2.png" width="440"></a>
 			</div>
 			<div class="right_banner_index">
 				<a href="/home/project/index/id/128"><img src="/static/common/img/banner3.png" width="440"></a>
@@ -159,26 +168,26 @@
 	</div>
 	
 	<div class="container" style="height:360px;">
-		<div class="service_box">
+		<div class="service_box" onclick="openService(1)">
 			<div class="service_heard_01" id="heard_01"></div>
 			<div class="service_title_index" id="title_01">技术服务</div>
 			<div class="service_memo" id="memo_01">技术团队、专利转让、技术升级</div>
 		</div>
 		<div style="float:left;width:48px;height:356px;"></div>
-		<div class="service_box">
+		<div class="service_box" onclick="openService(2)">
 			<div class="service_heard_02" id="heard_02"></div>
 			<div class="service_title_index" id="title_02">经营服务</div>
 			<div class="service_memo" id="memo_02">销售服务、订单服务、供应链管理</div>
 		</div>
 		<div style="float:left;width:48px;height:356px;"></div>
-		<div class="service_box">
+		<div class="service_box" onclick="openService(3)">
 			<div class="service_heard_03" id="heard_03"></div>
 			<div class="service_title_index" id="title_03">企业服务</div>
 			<div class="service_memo" id="memo_03">税务筹划、招商落户、高新认定</div>
 			<div class="service_memo_more" id="more_03">政府补贴、法务、培训、活动</div>
 		</div>
 		<div style="float:left;width:48px;height:356px;"></div>
-		<div class="service_box">
+		<div class="service_box" onclick="openService(4)">
 			<div class="service_heard_04" id="heard_04"></div>
 			<div class="service_title_index" id="title_04">资本服务</div>
 			<div class="service_memo" id="memo_04">上市服务、券商、会所</div>
@@ -371,7 +380,9 @@
 			}
 		}
 		
-
+		function openService(id){
+			window.location.href = '/home/business/index?pf=1#'+id;
+		}
 	</script>
 	</body>
 </html>

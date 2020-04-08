@@ -4,8 +4,15 @@
 			<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
 			<ul>
 				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
-				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
-				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Trilateral/index")}' title="三方演绎">三方演绎</a></li>
+				<li>
+				    <a href="#click" class="menu" title="资讯研报"> 资讯研报
+				      <ul class="menu-dropdown">
+				        <li onclick="viewNews()" title="资讯中心">资讯中心</li>
+				        <li onclick="viewReport()" title="研报中心">研报中心</li>
+				      </ul>
+				    </a>
+				</li>
 				<li><a style="font-size:22px;color:#222222;"  href="javascript:;" title="找资金">找资金</a></li>
 				<li><a href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
 				<li><a href="/" title="首页">首页</a></li>
@@ -27,7 +34,7 @@
 			<div class="index_search_right_s"><a href="javascript:;" onclick="searchKey()" title="立即搜索">立即搜索</a></div>
 		</div>
 	</div>
-	<div id="select_id" class="container" style="height:300px;">
+	<div id="select_id" class="container" style="height:370px;">
 		<div class="index_select">
 		     <div>
 		        <p class="shaixuan-tj">
@@ -73,12 +80,12 @@
 		                {/foreach}
 					</dl> 
 					<dl class="relative">
-		                <dt class="size_title"><span class="title_dt" style="float:left;">投资规模&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-		                {foreach name="$size" item="it"}
+		                <dt class="size_title"><span class="title_dt" style="float:left;">投资阶段&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		                {foreach name="$stage" item="it"}
 		                	<div style="float:left;" class="show-con" ><a href="/" data-id="{$it.id}">{$it.value}</a></div>
 		                {/foreach}
 		                </dt> 
-					</dl> 
+					</dl>
 					<dl class="relative">
 		             	<dt class="area_title">
 		             	 <div class="title_dt">地区选择&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -105,11 +112,12 @@
 						<a :href='item.link' target="_blank">
 							<div class="hot_item_content">
 								<div class="list_title" style="margin:22px 44px 27px 44px;line-height:50px;height:50px;" :title="item.org_short_name">{{item.org_short_name}}
-									<div class="item_bg" :style="item.style_bg_url"></div>
+									<!-- <div class="item_bg" :style="item.style_bg_url"></div>-->
+									<div style="float:right;width:46px;height:46px;border-radius:23px;"><img src="/static/common/img/default.png"></div>
 								</div>
-								<div class="list_content" style="line-height:30px;margin-left:44px;height:60px;" :title="item.name">{{item.contacts}}&nbsp;&nbsp;|&nbsp;&nbsp;{{item.position}}</div>
-								<div style="font-size:14px;margin:0 44px 44px 44px;line-height:40px;height:40px;">
-									<div style="float:left;color:#2e77f5;">
+								<div class="list_content" style="line-height:30px;margin-left:44px;height:30px;" :title="item.name">{{item.contacts}}&nbsp;&nbsp;|&nbsp;&nbsp;{{item.position}}</div>
+								<div style="font-size:14px;margin:0 44px 22px 44px;line-height:30px;height:30px;">
+									<div style="float:left;color:#357cf6;font-weight:bold;">
 										<span style="margin-right:8px;"  v-for="it in item.dict_list" :title="it.dict_name">{{it.dict_name}}</span>
 									</div>
 									<div style="float:left;width:50px;height:30px;"></div>
@@ -450,6 +458,14 @@
     		}
 		})
 	}
+    
+    function viewNews(){
+		window.location.href = '/home/news/lists';
+	}
+    		
+    function viewReport(){
+    	window.location.href = '/home/industry_report/lists';
+    }
 
 	</script>
 	</body>

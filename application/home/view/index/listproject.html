@@ -5,8 +5,15 @@
 			
 			<ul>
 				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
-				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
-				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Trilateral/index")}' title="三方演绎">三方演绎</a></li>
+				<li>
+				    <a href="#click" class="menu" title="资讯研报"> 资讯研报
+				      <ul class="menu-dropdown">
+				        <li onclick="viewNews()" title="资讯中心">资讯中心</li>
+				        <li onclick="viewReport()" title="研报中心">研报中心</li>
+				      </ul>
+				    </a>
+				</li>
 				<li><a href='{:url("Index/listorganize")}' title="找资金">找资金</a></li>
 				<li><a style="font-size:22px;color:#222222;" href='javascript:;' title="找项目">找项目</a></li>
 				<li><a href="/" title="首页">首页</a></li>
@@ -43,20 +50,6 @@
 		    </div>
 		    <div id="page-search-store" class="sxcon">
 		        <div class="search-by">
-		            <!-- <dl class="relative">
-		                <dt class="service_title"><span class="title_dt">业务细分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-		                {foreach name="$service" item="it"}
-		                	<a href="javascript:;" data-id="{$it.id}" id="href_{$it.id}" onclick="show_s({$it.id})">{$it.value}<i class="icon-angle-down" id="sicon_{$it.id}"></i></a>
-		                {/foreach}
-		                </dt> 
-		                {foreach name="$service" item="it"}
-		                	<dd class="show-con" id="service_{$it.id}" data-appid="{$it.id}" style="display:none;">
-		                	{foreach name="$it.sub" item="sub"}
-		                		<a href="/" data-id="{$sub.id}">{$sub.value}</a>
-		                	{/foreach}
-		                	</dd>
-		                {/foreach}
-					</dl>-->
 					<dl class="relative">
 		                <dt class="industry_title"><div class="title_dt">行业细分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 		                 <div class="wspan" style="float:left;">
@@ -74,12 +67,12 @@
 		                {/foreach}
 					</dl> 
 					<dl class="relative">
-		                <dt class="size_title"><span class="title_dt" style="float:left;">投资规模&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-		                {foreach name="$size" item="it"}
+		                <dt class="size_title"><span class="title_dt" style="float:left;">投资阶段&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		                {foreach name="$stage" item="it"}
 		                	<div style="float:left;" class="show-con" ><a href="/" data-id="{$it.id}">{$it.value}</a></div>
 		                {/foreach}
 		                </dt> 
-					</dl> 
+					</dl>
 					<dl class="relative">
 		             	<dt class="area_title">
 		             	 <div class="title_dt">地区选择&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -327,7 +320,6 @@
         .done(function(res) {
             if (res.code == 200) {
                 vue.displayCareList = res.data['data'];
-                console.log(vue.displayCareList);
                 vue.pageCount  		= res.data['page'];
                 vue.total 			= res.data['total'];
                 if(vue.total==1){
@@ -454,6 +446,15 @@
     		}
 		})
 	}
+    
+
+    function viewNews(){
+		window.location.href = '/home/news/lists';
+	}
+    		
+    function viewReport(){
+    	window.location.href = '/home/industry_report/lists';
+    }
 
 	</script>
 	</body>

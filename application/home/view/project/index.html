@@ -4,8 +4,15 @@
 		<div style="float:left;margin-top:40px;width:500px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
 			<ul>
 				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
-				<li><a href='{:url("IndustryReport/lists")}' title="研报中心">研报中心</a></li>
-				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Trilateral/index")}' title="三方演绎">三方演绎</a></li>
+				 <li>
+				    <a href="#click" class="menu" title="资讯研报"> 资讯研报
+				      <ul class="menu-dropdown">
+				        <li onclick="viewNews()" title="资讯中心">资讯中心</li>
+				        <li onclick="viewReport()" title="研报中心">研报中心</li>
+				      </ul>
+				    </a>
+				</li>
 				<li><a href='{:url("Index/listorganize")}' >找资金</a></li>
 				<li><a style="font-size:22px;color:#222222;" href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
 				<li><a href="/" title="首页">首页</a></li>
@@ -53,13 +60,14 @@
 		        <div style="text-align:right;float:right;">
 		        	<div class="call_view" style="margin-right:9px;" title="点击微信扫码联系"  onclick="showBox()"></div>
 		        	{if condition="$info.business_plan neq '' "}
-		        	<div class="plan_view" title="点击下载"></div>
+		        	<div class="plan_view" title="点击打开" onclick="showPdf()"></div>
 		        	{/if}
+		        	<input type="hidden" name="plan_url" id="plan_url" value="{$info.business_plan_url}">
 		        </div>
 	        </div>
-	        <div class="popBox">
+	        <div class="popBox" id="popBox">
 			    <div class="popClose">
-			        <a href="javascript:void(0)" onclick="closeBox()"><img src="/static/common/img/close.png"></a>
+			        <a href="javascript:void(0)" onclick="closeBox(1)"><img src="/static/common/img/close.png"></a>
 			    </div>
 		        <div class="popContent">
 				    <div class="popImg">
@@ -67,7 +75,26 @@
 				    </div>
 				</div>
 			</div>
-
+			<div class="popBox" id="orgBox">
+			    <div class="popClose">
+			        <a href="javascript:void(0)" onclick="closeBox(2)"><img src="/static/common/img/close.png"></a>
+			    </div>
+		        <div class="popContent" style="width:439px;height:439px;">
+		         	<div style="text-align:center;font-weight:bold;color:#ff2359;margin:50px 30px 0px  30px;">&nbsp;&nbsp;&nbsp;&nbsp;您有机构在平台还没有认领！！</div>
+				    <div style="text-align:center;font-weight:bold;color:#2e77f5;margin:20px 30px 0px  30px;line-height:30px;letter-spacing:2px;">
+				    	&nbsp;&nbsp;&nbsp;&nbsp;认领机构享受更多服务：<br/>
+				    	项目精准推送<br/>
+				    	企业直接联系<br/>
+				    	路演直接报名<br/>
+				    	海量BP投递<br/>
+				    	学习中心免费
+				    </div>
+				    <div class="login_submit" onclick="refer()" title="去认领" style="text-align:center;margin-top:50px;margin-left:50px;width:339px;height:108px;">去&nbsp;&nbsp;认&nbsp;&nbsp;领</div>
+				</div>
+			</div>
+			<input type="hidden" name="org_flg" id="org_flg" value="{$org_flg}">
+			<input type="hidden" name="org_id" id="org_id" value="{$org_id}">
+			
 	        <div class="detail_memo" style="float;right;width:55px;"></div>
 	        <div class="detail_memo" style="height:30px;border-bottom:solid 1px #d8d8d8;"></div>
 			<div class="detail_body">
@@ -115,13 +142,38 @@
 	
 	<script type="text/javascript">
 		function showBox(){
-			$(".popBox").show();
-			
+			$("#popBox").show();
+		}
+		function closeBox(id){
+			if(id==1){
+				$("#popBox").hide();
+			}else{
+				$("#orgBox").hide();
+			}
 		}
 		
-		function closeBox(){
-			$(".popBox").hide();
-			
+		function showPdf(){
+			var flg = $("#org_flg").val();
+			if(flg==1){
+				$("#orgBox").show();
+			}else{
+				var url = $("#plan_url").val();
+				window.location.href = url;
+			}
+		}
+		function refer(){
+			var id  = $("#org_id").val();
+			var url = "/home/organize/edit/id/"+id;
+			//window.location.href = url;
+			window.open(url);  
+		}
+		
+		function viewNews(){
+			window.location.href = '/home/news/lists';
+		}
+		
+		function viewReport(){
+			window.location.href = '/home/industry_report/lists';
 		}
 	</script>
 		

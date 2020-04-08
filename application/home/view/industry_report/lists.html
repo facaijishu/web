@@ -4,8 +4,15 @@
 		<div style="float:left;margin-top:45px;"><a href="/"><img src="/static/common/img/logo.png" title="FA財"></a></div>
 			<ul>
 				<li><a href="/home/member/index" title="个人中心"><img src="/static/common/img/member_icon.png" title="个人中心"></a></li>
-				<li><a style="font-size:22px;color:#222222;" href='javascript:;' title="研报中心">研报中心</a></li>
-				<li><a href='{:url("News/lists")}' title="资讯中心">资讯中心</a></li>
+				<li><a href='{:url("Trilateral/index")}' title="三方演绎">三方演绎</a></li>
+				<li>
+				    <a style="font-size:22px;color:#222222;" href="#click" class="menu" title="资讯研报"> 资讯研报
+				      <ul class="menu-dropdown">
+				        <li onclick="viewNews()" title="资讯中心">资讯中心</li>
+				        <li onclick="viewReport()" title="研报中心">研报中心</li>
+				      </ul>
+				    </a>
+				</li>
 				<li><a href='{:url("Index/listorganize")}' title="找资金">找资金</a></li>
 				<li><a href='{:url("Index/listproject")}' title="找项目">找项目</a></li>
 				<li><a href="/" title="首页">首页</a></li>
@@ -205,6 +212,13 @@
 	        	});
 	        });
 		}
+		function viewNews(){
+			window.location.href = '/home/news/lists';
+		}
+	    		
+	    function viewReport(){
+	    	window.location.href = '/home/industry_report/lists';
+	    }
 		</script>
 	</body>
 </html>
