@@ -18,8 +18,8 @@ class ShowIndex extends Model
             $res                 = $this->alias('s')
                                         ->join('Project p','p.pro_id = s.show_id')
                                         ->join('Dict d','p.inc_industry = d.id')
-                                        ->join('Dict d2','p.inc_sign = d2.id')
-                                        ->where(['p.status' => 2 , 'p.flag' => 1])
+                                        ->join('Dict d2','p.invest_stage = d2.id')
+                                        ->where(['s.type' => $login ,'p.status' => 2 , 'p.flag' => 1])
                                         ->order("s.list_order desc")
                                         ->field([
                                             'p.pro_id'      =>'id',
@@ -36,7 +36,7 @@ class ShowIndex extends Model
             foreach ($res as $key => $item) {
                 $res[$key]['bottom'] = subStrLen($item['introduction'],40);
                 $res[$key]['link']   = "/home/project/index/id/".$item['id'];
-            }                             
+            }            
            $result['pro-data']       = ['data'   => $res];
            $result['org-data']       = ['data'   => []];
        
@@ -45,7 +45,7 @@ class ShowIndex extends Model
             $res                 = $this->alias('s')
                                         ->join('Organize o','o.org_id = s.show_id')
                                         ->join('MaterialLibrary ml','o.top_img=ml.ml_id')
-                                        ->where(['o.status' => 2 , 'o.flag' => 1])
+                                        ->where(['s.type' => $login,'o.status' => 2 , 'o.flag' => 1])
                                         ->order("s.list_order desc")
                                         ->field([
                                             'o.org_id'            =>'id',
