@@ -39,6 +39,8 @@ class Project extends Base
             }
         }
         
+        
+        
         $org_id      = 0;
         $org_flg     = 1;
         $org_model   = model("Organize");
@@ -59,9 +61,16 @@ class Project extends Base
         $white  = model("whiteUid");
         if($white->getWhite($uid)){
             $model->where(['pro_id'=>$id])->setInc('view_num');
+            //浏览记录+1
+            model("ProjectView")->add($id,$uid);
         }
         
         $this->assign('info' , $info);
+        
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , $info['pro_name']."｜FA財-一站式智能信息投融交互平台");
         
         return view();
@@ -72,6 +81,10 @@ class Project extends Base
      * @return unknown
      */
     public function loading(){
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , "FA財-一站式智能投融信息交互平台");
         return view();
     }
@@ -106,6 +119,10 @@ class Project extends Base
         $stage  = $model->getStage();
         $this->assign('stage' , $stage);
         
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , "发布项目｜FA財-一站式智能信息投融交互平台");
         return view();
     }
@@ -145,6 +162,10 @@ class Project extends Base
         $stage  = $model->getStage();
         $this->assign('stage' , $stage);
         
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , $info['pro_name']."｜FA財-一站式智能信息投融交互平台");
         return view();
     }
@@ -343,7 +364,13 @@ class Project extends Base
         }else{
             $project = array();
         }
+        
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , $show['title']."｜FA財-一站式智能信息投融交互平台");
+        
         $this->assign('project',$project);
         $this->assign('show',$show);
         return view();

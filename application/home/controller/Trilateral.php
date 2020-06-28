@@ -9,6 +9,11 @@ class Trilateral extends Base
         $list  = $model->getList(4);
         
         $this->assign('list' , $list);
+        
+        $keywords       = config('keywords_show');
+        $description    = config('description_show');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , "三方演绎——FA財");
         return view();
     }
@@ -29,6 +34,11 @@ class Trilateral extends Base
         $this->assign('project' , $list);
         $this->assign('nlist' , $nlist);
         $this->assign('info' , $info);
+        
+        $keywords       = config('keywords_show');
+        $description    = config('description_show');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , $info['title']."｜FA財-一站式智能信息投融交互平台");
         return view();
     }

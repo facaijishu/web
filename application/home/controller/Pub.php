@@ -46,6 +46,11 @@ class Pub extends Base
                       ];
         
         $this->assign('roleList' , $roleList);
+        
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , "FA財-一站式智能投融信息交互平台");
         return view();
     }
@@ -56,6 +61,8 @@ class Pub extends Base
      */
     public function doRegister(){
         $post    = input();
+        faLog(json_encode($post));
+        
         /*检测验证码  */
         /*if(!captcha_check($post['imgcode'])){
             return $this->result('','201','图形验证码输入错误', 'json');
@@ -74,11 +81,12 @@ class Pub extends Base
             //check手机验证码
             $modelCode   = model("MemberCode");
             $resCode     = $modelCode->isValidCode($post['phone'],$post['regcode']);
+          
             if($resCode['code']==200){
                 $data = [];
-                $data['phone']          = $post['phone'];
-                $data['uidPwd']         = $post['password'];
-                $data['role_type']      = $post['roleType'];
+                $data['userPhone']      = $post['phone'];
+                $data['uidPwd']         = pwd_encrypt($post['password']);
+                $data['type']           = $post['roleType'];
                 if($post['userName']!==""){
                     $data['realName']       = $post['userName'];
                 }
@@ -88,15 +96,16 @@ class Pub extends Base
                 if($post['position']!==""){
                     $data['position']       = $post['position'];
                 }
-                if($post['realName']!=="" && $post['company']!=="" && $post['position']!==""){
+                if($post['userName']!=="" && $post['company']!=="" && $post['position']!==""){
                     $data['userType'] = 2;
                 }else{
                     $data['userType'] = 1;
                 }
-                $data['userType'] = 1;
                 $model   = model("Member");
-                $model->add($data);
-                
+                $res     = $model->add($data);
+                $info    = $model->getMemberById($res);
+                session("member",$info);
+                return $this->result(200, $resCode['code'],'', 'json');
             }else{
                 return $this->result('', $resCode['code'],$resCode['msg'], 'json');
             }
@@ -111,6 +120,11 @@ class Pub extends Base
         //$info   = session("member");
         //faLog("NEW----".json_encode($info));
         $this->assign('jump' , $jump);
+        
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , "FA財-一站式智能投融信息交互平台");
         return view();
     }
@@ -232,11 +246,21 @@ class Pub extends Base
     public function loading(){
         $jump = $this->request->param('jump')?$this->request->param('jump'):'';
         session("jump_url",$jump);
+        
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , "FA財-一站式智能投融信息交互平台");
         return view();
     }
     
     public function forgetPwd(){
+        
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , "FA財-一站式智能投融信息交互平台");
         return view();
     }
@@ -333,6 +357,30 @@ class Pub extends Base
         }else{
             return $this->result('', 201, '验证码获取失败，请重新获取', 'json');
         }
+    }
+    
+    
+    public function  sendSmsApi(){
+        
+        $sms    = new \common\Sms();
+        $tem_id = "SMS_185842599";
+        $array  = $sms->sendSms($mobile,$number,$tem_id);
+        $array  = json_decode(json_encode($array) , true);
+        //if(1==1){
+        if($array['Code'] == "OK"){
+            //插入短信发送表
+            $text    = "您正在重置您的FA财密码，验证码是：".$number."，您的信息已发布，请登陆FA財浏览项目资料。！";
+            $model   = model("SendSms");
+            $smsId   = $model->addSms($mobile,$text,1);
+            return $this->result('', 200, '发送成功', 'json');
+        }else{
+            //插入短信发送表
+            $text    = "您正在重置您的FA财密码，验证码是：".$number."，该验证码5分钟内有效，请勿泄漏于他人！";
+            $model   = model("SendSms");
+            $smsId   = $model->addSms($mobile,$text,2,$array['Message']);
+            return $this->result('', 201, "验证码短信异常，请稍后再试", 'json');
+        }
+        
     }
     
     

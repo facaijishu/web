@@ -40,6 +40,11 @@ class Organize extends Base
             $model->where(['org_id'=>$id])->setInc('view_num');
         }
         $this->assign('info' , $info);
+        
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , $info['org_short_name']."｜FA財-一站式智能信息投融交互平台");
         
         return view();
@@ -51,6 +56,11 @@ class Organize extends Base
      * @return unknown
      */
     public function loading(){
+        
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , "FA財-一站式智能投融信息交互平台");
         return view();
     }
@@ -126,6 +136,11 @@ class Organize extends Base
         $this->assign('stageList' , $stage);
         $this->assign('areaList' , $area);
         $this->assign('typeList' , $type);
+        
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , "上传机构｜FA財-一站式智能信息投融交互平台");
         return view();
     }
@@ -206,7 +221,10 @@ class Organize extends Base
         $this->assign('typeList' , $type);
         $this->assign('info' , $info);
         
-        
+        $keywords       = config('keywords');
+        $description    = config('description');
+        $this->assign('keywords' , $keywords);
+        $this->assign('description' , $description);
         $this->assign('title' , $info['org_name']."｜FA財-一站式智能信息投融交互平台");
         return view();
     } 
